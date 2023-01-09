@@ -1,5 +1,5 @@
 //------------------------------------------------------------------------------
-// Fichier      main.cpp
+// Fichier      GameMaster.h
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
@@ -12,13 +12,13 @@
 // Compilateur  MinGW w64 9.0
 //------------------------------------------------------------------------------
 
-#include <iostream>
-#include <cstdlib>
-
-using namespace std;
-
-int main (int argc, char* args[]) {
+#ifndef LABO_SNAKE_GAMEMASTER_H
+#define LABO_SNAKE_GAMEMASTER_H
 
 
-    return EXIT_SUCCESS;
-}
+class GameMaster {
+
+};
+
+
+#endif //LABO_SNAKE_GAMEMASTER_H
