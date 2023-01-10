@@ -16,22 +16,51 @@
 #define LABO_SNAKE_SNAKE_H
 
 #include "Annexe.h"
+#include "Coordonnee.h"
 
 #include <array>
 #include <vector>
 
-using Coordonee = std::array<int, 2>;
-using Corps = std::vector<std::array<int, 2>>;
+
+/**
+ * Les déplacements relatifs autorisé de la tondeuse
+ */
+const std::vector<Coordonnee> DEPLACEMENTS_AUTORISE = {
+        {0, -1}, // Haut
+        {1, 0},  // Droite
+        {0, 1},  // Bas
+        {-1, 0}  // Gauche
+};
+
+using Corps = std::vector<Coordonnee>;
 
 class Snake {
 public:
-    Snake(const int longeur, const int largeur) {
-        tete[0] = nbAleatoire(0,largeur);
-        tete[0] = nbAleatoire(0,longeur);
-    }
+
+    Snake(); // Besoin pour initialiser le vecteur de Snake
+
+    Snake(Coordonnee position);
+
+    void initTailleFenetre(int largeurFenetre, int longeurFenetre);
+
+    void creationPomme();
+
+    void bouge();
+
+    const Coordonnee &getTete() const;
+
+    const Corps &getCorps() const;
+
+    const Coordonnee &getPomme() const;
+
 private:
-    Coordonee tete;
+    Coordonnee tete;
     Corps corps;
+    Coordonnee posPomme;
+    int valPomme;
+
+    static const int largeurFenetre;
+    static const int longeurFenetre;
 };
 
 

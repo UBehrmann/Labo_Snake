@@ -17,21 +17,7 @@
 
 using namespace std;
 
-Fenetre::Fenetre() {
-
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_CreateWindowAndRenderer(WINDOW_WIDTH  * SCALE,
-                                WINDOW_HEIGTH * SCALE,
-                                SDL_WINDOW_SHOWN,
-                                &window, &renderer);
-    if (window == nullptr or renderer == nullptr) {
-        cout << "SDL not ready ... quitting" << endl;
-        exit(EXIT_FAILURE);
-    }
-
-    SDL_SetWindowTitle(window, "SDL Demo / Moving points");
-    SDL_RenderSetScale(renderer, SCALE, SCALE);
-}
+Fenetre::Fenetre() {}
 
 Fenetre::~Fenetre() {
     SDL_DestroyRenderer(renderer);
@@ -39,13 +25,13 @@ Fenetre::~Fenetre() {
     SDL_Quit();
 }
 
-void Fenetre::update(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes) {
+void Fenetre::update(const vector<Coordonnee>& objets) {
 
     pollEvent();
 
     clear();
 
-    addAllObjects(serpants, pommes);
+    addObjects(objets);
 
     SDL_RenderPresent(renderer);
 }
@@ -69,13 +55,6 @@ void Fenetre::clear(){
     SDL_RenderClear(renderer);
 }
 
-void Fenetre::addAllObjects(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes){
-
-    // Ajoute objects
-    addObjects(serpants);
-    addObjects(pommes);
-}
-
 void Fenetre::addObjects(const vector<Coordonnee> &objets) {
     for (Coordonnee objet : objets) {
         SDL_SetRenderDrawColor(renderer, objet.getR() , objet.getG(), objet.getB(), SDL_ALPHA_OPAQUE);
@@ -83,7 +62,24 @@ void Fenetre::addObjects(const vector<Coordonnee> &objets) {
     }
 }
 
-void Fenetre::addObjects(const Coordonnee &objet) {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-    SDL_RenderDrawPoint(renderer, objet.getX(), objet.getY());
+void Fenetre::initFenetre(int largeurFenetre, int longeurFenetre, float scale) {
+
+    this->largeurFenetre = largeurFenetre;
+    this->longeurFenetre = longeurFenetre;
+    this->scale = scale;
+
+    SDL_Init(SDL_INIT_VIDEO);
+
+    SDL_CreateWindowAndRenderer(largeurFenetre  * (int)scale,
+                                longeurFenetre * (int)scale,
+                                SDL_WINDOW_SHOWN,
+                                &window, &renderer);
+
+    if (window == nullptr or renderer == nullptr) {
+        cout << "SDL not ready ... quitting" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    SDL_SetWindowTitle(window, "SDL Demo / Moving points");
+    SDL_RenderSetScale(renderer, scale, scale);
 }

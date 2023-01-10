@@ -25,10 +25,11 @@ using namespace std;
  * D'après la demo 04_random.cpp.
  * https://github.com/gmbreguet/PRG1_DEMO/blob/main/04_Fonctions/04_random.cpp
  */
-int nbAleatoire(int valMin, int valMax) {
+template <typename T>
+T nbAleatoire(T valMin, T valMax) {
     random_device rand_dev;
     default_random_engine generator(rand_dev());
-    uniform_int_distribution<int> distr(valMin, valMax);
+    uniform_int_distribution<T> distr(valMin, valMax);
 
     return distr(generator);
 }
@@ -37,9 +38,10 @@ int nbAleatoire(int valMin, int valMax) {
  * Contrôle de la saisie utilisation en fonction de borne min et max
  * https://github.com/gmbreguet/PRG1_DEMO
  */
-int saisie(const string& msgInvite, const string& msgErreur, const int& min, const int& max) {
+template <typename output, typename input>
+output saisie(const string& msgInvite, const string& msgErreur, const input& min, const input& max) {
 
-    int          saisie;    // ne peuvent pas être déclarés
+    output       saisie;    // ne peuvent pas être déclarés
     bool         erreur;    // ... dans la boucle
 
     do {

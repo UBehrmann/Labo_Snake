@@ -23,29 +23,27 @@ class Fenetre {
 public:
     Fenetre();
 
-    void update(const std::vector<Coordonnee>& serpants, const std::vector<Coordonnee>& pommes);
+    void initFenetre(int largeurFenetre, int longeurFenetre, float scale = 10);
+
+    void update(const std::vector<Coordonnee> &objets);
 
     virtual ~Fenetre();
 
-    bool           appIsRunning   = true;
+    bool appIsRunning = true;
 
 private:
-    SDL_Window*    window         = nullptr;
-    SDL_Renderer*  renderer       = nullptr;
+    SDL_Window *window = nullptr;
+    SDL_Renderer *renderer = nullptr;
 
-
-
-    const int      WINDOW_WIDTH   = 80;
-    const int      WINDOW_HEIGTH  = 50;
-    const int      SCALE          = 10;
+    int largeurFenetre;
+    int longeurFenetre;
+    float scale;
 
     void pollEvent();
 
     void clear();
 
-    void addAllObjects(const std::vector<Coordonnee> &serpants, const std::vector<Coordonnee> &pommes);
-    void addObjects(const std::vector<Coordonnee>& objets);
-    void addObjects(const Coordonnee& objet);
+    void addObjects(const std::vector<Coordonnee> &objets);
 };
 
 

@@ -18,7 +18,7 @@ int Coordonnee::getY() const {
     return y;
 }
 
-Coordonnee::Coordonnee(int x, int y, int r, int g, int b) : x(x), y(y), r(r), g
+Coordonnee::Coordonnee(int x, int y, unsigned char r, unsigned char g, unsigned char b) : x(x), y(y), r(r), g
 (g), b(b) {}
 
 void Coordonnee::operator+=(const Coordonnee c) {
@@ -26,20 +26,32 @@ void Coordonnee::operator+=(const Coordonnee c) {
     y += c.y;
 }
 
-void Coordonnee::setCouleur(int r, int g, int b) {
+bool Coordonnee::operator!=(const Coordonnee c){
+    return !(*this == c);
+}
+
+bool Coordonnee::operator==(const Coordonnee c){
+    return x == c.x && y == c.y;
+}
+
+void Coordonnee::setCouleur(unsigned char r, unsigned char g, unsigned char b) {
     this->r = r;
     this->g = g;
     this->b = b;
 }
 
-int Coordonnee::getR() const {
+bool Coordonnee::memePos(Coordonnee coordonnee) {
+    return *this == coordonnee;
+}
+
+unsigned char Coordonnee::getR() const {
     return r;
 }
 
-int Coordonnee::getG() const {
+unsigned char Coordonnee::getG() const {
     return g;
 }
 
-int Coordonnee::getB() const {
+unsigned char Coordonnee::getB() const {
     return b;
 }

@@ -17,21 +17,27 @@ public:
 
     Coordonnee() : x(0), y(0), r(255), g(255), b(255) {};
 
-    Coordonnee(int x, int y, int r = 255, int g = 255, int b = 255);
+    Coordonnee(int x, int y, unsigned char r = 255, unsigned char g = 255, unsigned char b = 255);
 
-    void setCouleur(int r, int g, int b);
+    void setCouleur(unsigned char r, unsigned char g, unsigned char b);
 
     int getX() const;
 
     int getY() const;
 
-    int getR() const;
+    unsigned char getR() const;
 
-    int getG() const;
+    unsigned char getG() const;
 
-    int getB() const;
+    unsigned char getB() const;
 
     void operator+=(const Coordonnee c);
+
+    bool operator!=(const Coordonnee c);
+
+    bool operator==(const Coordonnee c);
+
+    bool memePos(Coordonnee coordonne);
 
 private:
     // Position
@@ -39,9 +45,9 @@ private:
     int y;
 
     // Couleurs
-    int r;
-    int g;
-    int b;
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
 };
 
 #endif //SURVIVOR_COORDONNEE_H

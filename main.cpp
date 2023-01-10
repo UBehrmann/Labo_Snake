@@ -12,30 +12,19 @@
 // Compilateur  MinGW w64 9.0
 //------------------------------------------------------------------------------
 
-#include <iostream>
 #include <cstdlib>
-#include "Fenetre.h"
-#include "Snake.h"
-#include <vector>
-#include "Coordonnee.h"
+#include "GameMaster.h"
 
 using namespace std;
 
 int main (int argc, char* args[]) {
 
-    vector<Coordonnee> snake;
-    snake.push_back(Coordonnee(20, 20, 0, 0, 255));
-    snake.push_back(Coordonnee(20, 21, 0, 0, 255));
-    snake.push_back(Coordonnee(20, 22, 0, 0, 255));
-    snake.push_back(Coordonnee(20, 23, 0, 0, 255));
-    vector<Coordonnee> pomme;
-    pomme.push_back(Coordonnee(30, 30, 255, 0, 0));
+    GameMaster gm;
 
+    gm.init();
 
-    Fenetre fenetre;
-
-    while (fenetre.appIsRunning){
-        fenetre.update(snake, pomme);
+    while (gm.appIsRunning()){
+        gm.update();
     }
 
 
