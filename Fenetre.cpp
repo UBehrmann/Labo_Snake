@@ -33,7 +33,25 @@ Fenetre::Fenetre() {
     SDL_RenderSetScale(renderer, SCALE, SCALE);
 }
 
-void Fenetre::Affiche(const vector<Coordonnee>& serpants, const vector<Coordonnee>& pommes) {
+Fenetre::~Fenetre() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
+void Fenetre::update(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes) {
+
+    pollEvent();
+
+    clear();
+
+    addObjects(serpants, pommes);
+
+    SDL_RenderPresent(renderer);
+}
+
+void Fenetre::pollEvent(){
+
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
 
@@ -43,23 +61,27 @@ void Fenetre::Affiche(const vector<Coordonnee>& serpants, const vector<Coordonne
                 break;
         }
     }
+}
 
+void Fenetre::clear(){
     // Clear
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
+}
+
+void Fenetre::addObjects(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes){
 
     // Ajoute objects
 
-//    SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-//    SDL_RenderDrawPoint(renderer, point.x, point.y);
+    // TODO : methodes d'ajout d'objets vector<Coordonnee>
 
+    for (Coordonnee serpant : serpants) {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
+        SDL_RenderDrawPoint(renderer, serpant.getX(), serpant.getY());
+    }
 
-    // Render
-    SDL_RenderPresent(renderer);
-}
-
-Fenetre::~Fenetre() {
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    for ( Coordonnee pomme : pommes){
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
+        SDL_RenderDrawPoint(renderer, pomme.getX(), pomme.getY());
+    }
 }

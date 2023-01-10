@@ -23,7 +23,7 @@ class Fenetre {
 public:
     Fenetre();
 
-    void Affiche(const std::vector<Coordonnee>& serpants, const std::vector<Coordonnee>& pommes);
+    void update(const std::vector<Coordonnee>& serpants, const std::vector<Coordonnee>& pommes);
 
     virtual ~Fenetre();
 
@@ -39,6 +39,11 @@ private:
     const int      WINDOW_HEIGTH  = 50;
     const int      SCALE          = 10;
 
+    void pollEvent();
+
+    void clear();
+
+    void addObjects(const std::vector<Coordonnee> &serpants, const std::vector<Coordonnee> &pommes);
 };
 
 
