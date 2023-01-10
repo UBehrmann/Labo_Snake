@@ -17,13 +17,13 @@
 
 #include <sdl.h>
 #include <vector>
-#include "Pixel.h"
+#include "Coordonnee.h"
 
 class Fenetre {
 public:
     Fenetre();
 
-    void update(const std::vector<Pixel>& serpants, const std::vector<Pixel>& pommes);
+    void update(const std::vector<Coordonnee>& serpants, const std::vector<Coordonnee>& pommes);
 
     virtual ~Fenetre();
 
@@ -43,9 +43,9 @@ private:
 
     void clear();
 
-    void addAllObjects(const std::vector<Pixel> &serpants, const std::vector<Pixel> &pommes);
-    void addObjects(const std::vector<Pixel>& objets);
-    void addObjects(const Pixel& objet);
+    void addAllObjects(const std::vector<Coordonnee> &serpants, const std::vector<Coordonnee> &pommes);
+    void addObjects(const std::vector<Coordonnee>& objets);
+    void addObjects(const Coordonnee& objet);
 };
 
 

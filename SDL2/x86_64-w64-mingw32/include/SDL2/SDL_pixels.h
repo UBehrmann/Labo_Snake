@@ -47,7 +47,7 @@ extern "C" {
 #define SDL_ALPHA_TRANSPARENT 0
 /* @} */
 
-/** Pixel type. */
+/** Coordonnee type. */
 typedef enum
 {
     SDL_PIXELTYPE_UNKNOWN,

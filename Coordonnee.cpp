@@ -8,38 +8,38 @@
 // Compilateur    : MinGW w64 9.0 / C++20
 //---------------------------------------------------------------------------------
 
-#include "Pixel.h"
+#include "Coordonnee.h"
 
-int Pixel::getX() const {
+int Coordonnee::getX() const {
     return x;
 }
 
-int Pixel::getY() const {
+int Coordonnee::getY() const {
     return y;
 }
 
-Pixel::Pixel(int x, int y, int r, int g, int b) : x(x), y(y), r(r), g
+Coordonnee::Coordonnee(int x, int y, int r, int g, int b) : x(x), y(y), r(r), g
 (g), b(b) {}
 
-void Pixel::operator+=(const Pixel c) {
+void Coordonnee::operator+=(const Coordonnee c) {
     x += c.x;
     y += c.y;
 }
 
-void Pixel::setCouleur(int r, int g, int b) {
+void Coordonnee::setCouleur(int r, int g, int b) {
     this->r = r;
     this->g = g;
     this->b = b;
 }
 
-int Pixel::getR() const {
+int Coordonnee::getR() const {
     return r;
 }
 
-int Pixel::getG() const {
+int Coordonnee::getG() const {
     return g;
 }
 
-int Pixel::getB() const {
+int Coordonnee::getB() const {
     return b;
 }

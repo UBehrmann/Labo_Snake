@@ -4,7 +4,7 @@ project(Labo_Snake)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(Labo_Snake main.cpp GameMaster.cpp GameMaster.h Snake.cpp Snake.h Fenetre.cpp
-        Fenetre.h Annexe.cpp Annexe.h Pixel.cpp Pixel.h)
+        Fenetre.h Annexe.cpp Annexe.h Coordonnee.cpp Coordonnee.h)
 
 # --- SDL2 SETUP ---
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)

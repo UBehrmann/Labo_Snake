@@ -195,7 +195,7 @@ extern DECLSPEC SDL_Surface *SDLCALL SDL_CreateRGBSurfaceWithFormat
  * not allocate memory for the pixel data, instead the caller provides an
  * existing buffer of data for the surface to use.
  *
- * No copy is made of the pixel data. Pixel data is not managed automatically;
+ * No copy is made of the pixel data. Coordonnee data is not managed automatically;
  * you must free the surface before you free the pixel data.
  *
  * \param pixels a pointer to existing pixel data
@@ -236,7 +236,7 @@ extern DECLSPEC SDL_Surface *SDLCALL SDL_CreateRGBSurfaceFrom(void *pixels,
  * instead of providing pixel color masks, you provide it with a predefined
  * format from SDL_PixelFormatEnum.
  *
- * No copy is made of the pixel data. Pixel data is not managed automatically;
+ * No copy is made of the pixel data. Coordonnee data is not managed automatically;
  * you must free the surface before you free the pixel data.
  *
  * \param pixels a pointer to existing pixel data

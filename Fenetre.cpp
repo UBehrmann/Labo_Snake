@@ -39,7 +39,7 @@ Fenetre::~Fenetre() {
     SDL_Quit();
 }
 
-void Fenetre::update(const vector<Pixel> &serpants, const vector<Pixel> &pommes) {
+void Fenetre::update(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes) {
 
     pollEvent();
 
@@ -69,21 +69,21 @@ void Fenetre::clear(){
     SDL_RenderClear(renderer);
 }
 
-void Fenetre::addAllObjects(const vector<Pixel> &serpants, const vector<Pixel> &pommes){
+void Fenetre::addAllObjects(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes){
 
     // Ajoute objects
     addObjects(serpants);
     addObjects(pommes);
 }
 
-void Fenetre::addObjects(const vector<Pixel> &objets) {
-    for (Pixel objet : objets) {
+void Fenetre::addObjects(const vector<Coordonnee> &objets) {
+    for (Coordonnee objet : objets) {
         SDL_SetRenderDrawColor(renderer, objet.getR() , objet.getG(), objet.getB(), SDL_ALPHA_OPAQUE);
         SDL_RenderDrawPoint(renderer, objet.getX(), objet.getY());
     }
 }
 
-void Fenetre::addObjects(const Pixel &objet) {
+void Fenetre::addObjects(const Coordonnee &objet) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
     SDL_RenderDrawPoint(renderer, objet.getX(), objet.getY());
 }
