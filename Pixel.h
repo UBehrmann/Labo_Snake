@@ -12,22 +12,36 @@
 #define SURVIVOR_COORDONNEE_H
 
 
-class Coordonnee {
+class Pixel {
 public:
 
-    Coordonnee() : x(0), y(0) {};
+    Pixel() : x(0), y(0), r(255), g(255), b(255) {};
 
-    Coordonnee(int x, int y);
+    Pixel(int x, int y, int r = 255, int g = 255, int b = 255);
+
+    void setCouleur(int r, int g, int b);
 
     int getX() const;
 
     int getY() const;
 
-    void operator+=(const Coordonnee c);
+    int getR() const;
+
+    int getG() const;
+
+    int getB() const;
+
+    void operator+=(const Pixel c);
 
 private:
+    // Position
     int x;
     int y;
+
+    // Couleurs
+    int r;
+    int g;
+    int b;
 };
 
 #endif //SURVIVOR_COORDONNEE_H

@@ -39,13 +39,13 @@ Fenetre::~Fenetre() {
     SDL_Quit();
 }
 
-void Fenetre::update(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes) {
+void Fenetre::update(const vector<Pixel> &serpants, const vector<Pixel> &pommes) {
 
     pollEvent();
 
     clear();
 
-    addObjects(serpants, pommes);
+    addAllObjects(serpants, pommes);
 
     SDL_RenderPresent(renderer);
 }
@@ -69,19 +69,21 @@ void Fenetre::clear(){
     SDL_RenderClear(renderer);
 }
 
-void Fenetre::addObjects(const vector<Coordonnee> &serpants, const vector<Coordonnee> &pommes){
+void Fenetre::addAllObjects(const vector<Pixel> &serpants, const vector<Pixel> &pommes){
 
     // Ajoute objects
+    addObjects(serpants);
+    addObjects(pommes);
+}
 
-    // TODO : methodes d'ajout d'objets vector<Coordonnee>
-
-    for (Coordonnee serpant : serpants) {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
-        SDL_RenderDrawPoint(renderer, serpant.getX(), serpant.getY());
+void Fenetre::addObjects(const vector<Pixel> &objets) {
+    for (Pixel objet : objets) {
+        SDL_SetRenderDrawColor(renderer, objet.getR() , objet.getG(), objet.getB(), SDL_ALPHA_OPAQUE);
+        SDL_RenderDrawPoint(renderer, objet.getX(), objet.getY());
     }
+}
 
-    for ( Coordonnee pomme : pommes){
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-        SDL_RenderDrawPoint(renderer, pomme.getX(), pomme.getY());
-    }
+void Fenetre::addObjects(const Pixel &objet) {
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawPoint(renderer, objet.getX(), objet.getY());
 }
