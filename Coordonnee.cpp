@@ -26,6 +26,11 @@ void Coordonnee::operator+=(const Coordonnee c) {
     y += c.y;
 }
 
+void Coordonnee::operator=(const Coordonnee c) {
+    x = c.x;
+    y = c.y;
+}
+
 bool Coordonnee::operator!=(const Coordonnee c){
     return !(*this == c);
 }
@@ -54,4 +59,12 @@ unsigned char Coordonnee::getG() const {
 
 unsigned char Coordonnee::getB() const {
     return b;
+}
+
+void Coordonnee::setX(int x) {
+    Coordonnee::x = x;
+}
+
+void Coordonnee::setY(int y) {
+    Coordonnee::y = y;
 }

@@ -25,6 +25,8 @@ public:
 
     int getY() const;
 
+
+
     unsigned char getR() const;
 
     unsigned char getG() const;
@@ -33,9 +35,15 @@ public:
 
     void operator+=(const Coordonnee c);
 
+    void operator=(const Coordonnee c);
+
     bool operator!=(const Coordonnee c);
 
     bool operator==(const Coordonnee c);
+
+    void setX(int x);
+
+    void setY(int y);
 
     bool memePos(Coordonnee coordonne);
 

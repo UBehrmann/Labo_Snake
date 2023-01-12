@@ -21,14 +21,10 @@ GameMaster::GameMaster() {
 }
 
 void GameMaster:: init() {
-    int longeurFenetre;
-    int largeurFenetre;
-    size_t nbreSerpents;
-
     // Saisies
-    longeurFenetre = saisie<int>("", "", 80, 200);
-    largeurFenetre = saisie<int>("", "", 80, 200);
-    nbreSerpents = saisie<size_t>("", "", 5, 20);
+    int longeurFenetre = 100; // saisie("Longeur fenetre", "Longeur fenetre", 80, 200);
+    int largeurFenetre = 40; // saisie("", "Largeur fenetre", 80, 200);
+    size_t nbreSerpents = 20; // (size_t)saisie("", "Nbre de serpents", 5, 20);
 
     // Init fenêtre
     fenetre.initFenetre(longeurFenetre, largeurFenetre);
@@ -36,11 +32,13 @@ void GameMaster:: init() {
     // Init serpents
     serpents.resize(nbreSerpents);
 
+    Snake::initTailleFenetre(largeurFenetre, longeurFenetre);
+
     // Remplir vecteur de serpents en contrôlant de ne pas en avoir au même endroit
     Coordonnee position;
     for (size_t i = 0; i < nbreSerpents; ++i) {
         do {
-            position = {nbAleatoire<int>(0,largeurFenetre), nbAleatoire<int>(0,longeurFenetre)};
+            position = {nbAleatoire(0,largeurFenetre), nbAleatoire(0,longeurFenetre)};
         } while (serpents[i].getTete() == position);
     }
 
@@ -54,8 +52,9 @@ void GameMaster::update() {
     std::vector<Coordonnee> pixels;
 
     // Update serpents
-
-
+    for (int i = 0; i < serpents.size(); ++i) {
+        serpents[i].bouge();
+    }
 
     // Update Affichage
 

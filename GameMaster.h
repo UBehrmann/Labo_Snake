@@ -20,7 +20,6 @@
 #include "Snake.h"
 
 class GameMaster {
-private:
 public:
     GameMaster();
 

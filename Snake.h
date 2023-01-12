@@ -37,11 +37,14 @@ using Corps = std::vector<Coordonnee>;
 class Snake {
 public:
 
+    static int largeurFenetre;
+    static int longeurFenetre;
+
     Snake(); // Besoin pour initialiser le vecteur de Snake
 
     Snake(Coordonnee position);
 
-    void initTailleFenetre(int largeurFenetre, int longeurFenetre);
+    static void initTailleFenetre(int largeurFenetre, int longeurFenetre);
 
     void creationPomme();
 
@@ -58,9 +61,6 @@ private:
     Corps corps;
     Coordonnee posPomme;
     int valPomme;
-
-    static const int largeurFenetre;
-    static const int longeurFenetre;
 };
 
 

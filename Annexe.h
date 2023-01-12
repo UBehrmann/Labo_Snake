@@ -28,8 +28,7 @@
  * @return        : un entier aleatoire entre valMin et valMax.
  * @exception     : - (Aucune exception).
  */
-template <typename T>
-T nbAleatoire(T valMin, T valMax);
+int nbAleatoire(int valMin, int valMax);
 
 
 /** ---------------------------------------------------------------------------------
@@ -43,9 +42,8 @@ T nbAleatoire(T valMin, T valMax);
 * @return          : Valeur saisie par l'utilisateur (un int)
 * @exception       : - (Aucune exception)
 */
-template <typename output, typename input>
-output saisie(const std::string& msgInvite,const std::string& msgErreur,
-           const input& min,const input& max);
+int saisie(const std::string& msgInvite,const std::string& msgErreur,
+           const int& min,const int& max);
 
 
 
