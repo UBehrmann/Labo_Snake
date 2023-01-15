@@ -35,6 +35,8 @@ private:
     std::vector<Snake> serpents;
 
     Fenetre fenetre;
+
+    std::vector<Coordonnee> pixels;
 };
 
 

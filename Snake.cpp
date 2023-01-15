@@ -20,23 +20,27 @@
 int Snake::longeurFenetre = 100;
 int Snake::largeurFenetre = 80;
 
-Snake::Snake() {
+Snake::Snake() : tete(*corps.begin()) {
 }
 
-Snake::Snake(Coordonnee position){
-    // Définir toutes les parties du corps à la même position que la tête
-    this->tete = position;
+Snake::Snake(Coordonnee position) : tete(*corps.begin()){
 
-    this->corps.resize(10);
+    // Assigne la position aléatoire à la tête
+    tete = position;
+
+    // Définir toutes les parties du corps à la même position que la tête
+    corps.resize(10);
     for (size_t i = 0; i < 10; ++i) {       //Définir const taille Serpent au départ
-        this->corps[i] = this->tete;
-        this->corps[i].setCouleur(255,0,255);
+        corps[i] = tete;
+        corps[i].setCouleur(0,0,0);
     }
+
+    iterateur = corps.begin() + 1;
 
     creationPomme();
 }
 
-const Coordonnee &Snake::getTete() const {
+const Coordonnee Snake::getTete() const{
     return tete;
 }
 
@@ -52,32 +56,28 @@ void Snake::creationPomme() {
 //    this->posPomme = {, , }; //
     posPomme.setXY(nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre));
     posPomme.setCouleur(0, 255, 0);
-    this->valPomme = nbAleatoire(1,10);
+    valPomme = nbAleatoire(1,10);
 }
 
 void Snake::bouge() {
-
-    // Itérateur qui donne la prochaine case qui remplacera la tête
-    std::vector<Coordonnee>::iterator iterateur = this->corps.begin() + 1;
-
     // Déplacement du corps (dernier pixel prend la place de la tête)
-    *iterateur = this->tete;
+    //*iterateur = tete;      //LA LIGNE QUI POSE PROBLEME
     ++iterateur;
 
     // Si l'itérateur arrive au bout du corps revenir juste après la tête
-    if (iterateur == this->corps.end()) {
-        iterateur = this->corps.begin() + 1;
+    if (iterateur == corps.end()) {
+        iterateur = corps.begin() + 1;
     }
 
     // Définition de la nouvelle position de la tête
-    int distHorizontale = this->getPomme().getX() - this->tete.getX();
-    int distVerticale   = this->getPomme().getY() - this->tete.getY();
+    int distHorizontale = getPomme().getX() - tete.getX();
+    int distVerticale   = getPomme().getY() - tete.getY();
 
     if (abs(distHorizontale) > abs(distVerticale)) {
-        this->tete += DEPLACEMENTS_AUTORISE[distHorizontale < 0 ? 3 : 1];
+        tete += DEPLACEMENTS_AUTORISE[distHorizontale < 0 ? 3 : 1];
     }
     else {
-        this->tete += DEPLACEMENTS_AUTORISE[distVerticale < 0 ? 0 : 2];
+        tete += DEPLACEMENTS_AUTORISE[distVerticale < 0 ? 0 : 2];
     }
 }
 

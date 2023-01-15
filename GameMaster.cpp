@@ -47,19 +47,17 @@ void GameMaster:: init() {
 
 
 void GameMaster::update() {
-    std::vector<Coordonnee> pixels;
     pixels.resize(100);
 
     // Update serpents
-//    for (int i = 0; i < serpents.size(); ++i) {
-//        serpents[i].bouge();
-//    }
+    for (Snake i : serpents) {
+        i.bouge();
+    }
 
     // Update Affichage
 
-//     Ajoute tous les corps des serpents et les pommes a un vecteur de pixels
+    // Ajoute tous les corps des serpents et les pommes a un vecteur de pixels
     for (const Snake& serpent : serpents) {
-
         pixels.insert(pixels.end(), serpent.getCorps().begin(), serpent.getCorps().end());
         pixels.push_back(serpent.getPomme());
     }

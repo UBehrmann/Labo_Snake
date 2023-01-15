@@ -80,6 +80,6 @@ void Fenetre::initFenetre(int largeurFenetre, int longeurFenetre, float scale) {
         exit(EXIT_FAILURE);
     }
 
-    SDL_SetWindowTitle(window, "SDL Demo / Moving points");
+    SDL_SetWindowTitle(window, "Labo_Snake");
     SDL_RenderSetScale(renderer, scale, scale);
 }

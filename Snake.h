@@ -50,17 +50,19 @@ public:
 
     void bouge();
 
-    const Coordonnee &getTete() const;
+    const Coordonnee getTete() const;
 
     const Corps &getCorps() const;
 
     const Coordonnee &getPomme() const;
 
 private:
-    Coordonnee tete;
-    Corps corps;
+    Corps corps = {{0,0}};
+    Coordonnee& tete;
     Coordonnee posPomme;
     int valPomme;
+    // Itérateur qui donne la prochaine case qui remplacera la tête
+    std::vector<Coordonnee>::iterator iterateur;
 };
 
 

@@ -21,12 +21,12 @@ int Coordonnee::getY() const {
 Coordonnee::Coordonnee(int x, int y, unsigned char r, unsigned char g, unsigned char b) : x(x), y(y), r(r), g
 (g), b(b) {}
 
-void Coordonnee::operator+=(const Coordonnee c) {
+Coordonnee& Coordonnee::operator+=(const Coordonnee c) {
     x += c.x;
     y += c.y;
 }
 
-void Coordonnee::operator=(const Coordonnee c) {
+Coordonnee& Coordonnee::operator=(const Coordonnee c) {
     x = c.x;
     y = c.y;
 }
