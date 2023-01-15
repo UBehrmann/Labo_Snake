@@ -29,6 +29,8 @@ public:
 
     bool appIsRunning() const;
 
+    bool estOccupe(Coordonnee c);
+
 private:
     std::vector<Snake> serpents;
 

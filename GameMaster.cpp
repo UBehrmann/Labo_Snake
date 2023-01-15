@@ -23,7 +23,7 @@ GameMaster::GameMaster() {
 void GameMaster:: init() {
     // Saisies
     int longeurFenetre = 100; // saisie("Longeur fenetre", "Longeur fenetre", 80, 200);
-    int largeurFenetre = 40; // saisie("", "Largeur fenetre", 80, 200);
+    int largeurFenetre = 80; // saisie("", "Largeur fenetre", 80, 200);
     size_t nbreSerpents = 20; // (size_t)saisie("", "Nbre de serpents", 5, 20);
 
     // Init fenêtre
@@ -39,27 +39,27 @@ void GameMaster:: init() {
     for (size_t i = 0; i < nbreSerpents; ++i) {
         do {
             position = {nbAleatoire(0,largeurFenetre), nbAleatoire(0,longeurFenetre)};
-        } while (serpents[i].getTete() == position);
+        } while (estOccupe(position));
+
+        serpents.push_back(Snake(position));
     }
-
-    serpents.push_back(Snake(position));
-
 }
-
 
 
 void GameMaster::update() {
     std::vector<Coordonnee> pixels;
+    pixels.resize(100);
 
     // Update serpents
-    for (int i = 0; i < serpents.size(); ++i) {
-        serpents[i].bouge();
-    }
+//    for (int i = 0; i < serpents.size(); ++i) {
+//        serpents[i].bouge();
+//    }
 
     // Update Affichage
 
-    // Ajoute tous les corps des serpents et les pommes a un vecteur de pixels
+//     Ajoute tous les corps des serpents et les pommes a un vecteur de pixels
     for (const Snake& serpent : serpents) {
+
         pixels.insert(pixels.end(), serpent.getCorps().begin(), serpent.getCorps().end());
         pixels.push_back(serpent.getPomme());
     }
@@ -69,6 +69,14 @@ void GameMaster::update() {
 
 bool GameMaster::appIsRunning() const {
     return fenetre.appIsRunning;
+}
+
+bool GameMaster::estOccupe(Coordonnee c) {
+    for ( const Snake& s : serpents)
+        if ( s.getTete() == c )
+            return true;
+
+    return false;
 }
 
 

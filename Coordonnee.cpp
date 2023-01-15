@@ -68,3 +68,8 @@ void Coordonnee::setX(int x) {
 void Coordonnee::setY(int y) {
     Coordonnee::y = y;
 }
+
+void Coordonnee::setXY(int x, int y) {
+    this->x = x;
+    this->y = y;
+}

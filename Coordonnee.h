@@ -45,6 +45,8 @@ public:
 
     void setY(int y);
 
+    void setXY(int x, int y);
+
     bool memePos(Coordonnee coordonne);
 
 private:

@@ -17,8 +17,8 @@
 
 #include <cmath>
 
-int Snake::longeurFenetre = 10;
-int Snake::largeurFenetre = 10;
+int Snake::longeurFenetre = 100;
+int Snake::largeurFenetre = 80;
 
 Snake::Snake() {
 }
@@ -26,9 +26,14 @@ Snake::Snake() {
 Snake::Snake(Coordonnee position){
     // Définir toutes les parties du corps à la même position que la tête
     this->tete = position;
+
+    this->corps.resize(10);
     for (size_t i = 0; i < 10; ++i) {       //Définir const taille Serpent au départ
         this->corps[i] = this->tete;
+        this->corps[i].setCouleur(255,0,255);
     }
+
+    creationPomme();
 }
 
 const Coordonnee &Snake::getTete() const {
@@ -44,7 +49,9 @@ const Coordonnee &Snake::getPomme() const {
 }
 
 void Snake::creationPomme() {
-    this->posPomme = {nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre)};
+//    this->posPomme = {, , }; //
+    posPomme.setXY(nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre));
+    posPomme.setCouleur(0, 255, 0);
     this->valPomme = nbAleatoire(1,10);
 }
 
