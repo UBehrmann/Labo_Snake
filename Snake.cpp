@@ -16,22 +16,23 @@
 #include "Annexe.h"
 
 #include <cmath>
+#include <iostream>
 
 int Snake::longeurFenetre = 100;
 int Snake::largeurFenetre = 80;
 
-Snake::Snake() : tete(*corps.begin()) {
+Snake::Snake() : ID(-1){
 }
 
-Snake::Snake(Coordonnee position) : tete(*corps.begin()){
+Snake::Snake(Coordonnee position, int id) : ID(id){
 
     // Assigne la position aléatoire à la tête
     tete = position;
+    tete.setCouleur(0,0,0);
 
     // Définir toutes les parties du corps à la même position que la tête
-    corps.resize(10);
     for (size_t i = 0; i < 10; ++i) {       //Définir const taille Serpent au départ
-        corps[i] = tete;
+        corps.push_back(tete);
         corps[i].setCouleur(0,0,0);
     }
 
@@ -40,7 +41,7 @@ Snake::Snake(Coordonnee position) : tete(*corps.begin()){
     creationPomme();
 }
 
-const Coordonnee Snake::getTete() const{
+Coordonnee Snake::getTete() const{
     return tete;
 }
 
@@ -52,6 +53,12 @@ const Coordonnee &Snake::getPomme() const {
     return posPomme;
 }
 
+bool Snake::operator!=(const Snake s) {
+    return this->ID != s.ID;
+
+}
+
+
 void Snake::creationPomme() {
 //    this->posPomme = {, , }; //
     posPomme.setXY(nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre));
@@ -60,8 +67,10 @@ void Snake::creationPomme() {
 }
 
 void Snake::bouge() {
+
+
     // Déplacement du corps (dernier pixel prend la place de la tête)
-    //*iterateur = tete;      //LA LIGNE QUI POSE PROBLEME
+    *iterateur = tete;
     ++iterateur;
 
     // Si l'itérateur arrive au bout du corps revenir juste après la tête
@@ -70,8 +79,8 @@ void Snake::bouge() {
     }
 
     // Définition de la nouvelle position de la tête
-    int distHorizontale = getPomme().getX() - tete.getX();
-    int distVerticale   = getPomme().getY() - tete.getY();
+    int distHorizontale = posPomme.getX() - tete.getX();
+    int distVerticale   = posPomme.getY() - tete.getY();
 
     if (abs(distHorizontale) > abs(distVerticale)) {
         tete += DEPLACEMENTS_AUTORISE[distHorizontale < 0 ? 3 : 1];
@@ -79,7 +88,18 @@ void Snake::bouge() {
     else {
         tete += DEPLACEMENTS_AUTORISE[distVerticale < 0 ? 0 : 2];
     }
+    corps.at(0) = tete;
+
+    // Controle si il a atteint la pomme
+    if (tete == posPomme) {
+        creationPomme();
+    }
 }
+
+void mangeSerpent(Snake s, size_t k) {
+   // s.getCorps().erase(s.getCorps().begin() + k, s.getCorps().end());
+}
+
 
 // https://stackoverflow.com/questions/583076/c-c-changing-the-value-of-a-const
 void Snake::initTailleFenetre(int largeurFenetreRecu, int longeurFenetreRecu) {

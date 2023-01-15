@@ -42,27 +42,34 @@ public:
 
     Snake(); // Besoin pour initialiser le vecteur de Snake
 
-    Snake(Coordonnee position);
+    Snake(Coordonnee position, const int id);
 
     static void initTailleFenetre(int largeurFenetre, int longeurFenetre);
+
+    bool operator!=(const Snake s);
 
     void creationPomme();
 
     void bouge();
 
-    const Coordonnee getTete() const;
+    bool mangePomme;
+
+    static void mangeSerpent(Snake s, size_t k);
+
+    Coordonnee getTete() const;
 
     const Corps &getCorps() const;
 
     const Coordonnee &getPomme() const;
 
 private:
-    Corps corps = {{0,0}};
-    Coordonnee& tete;
+    Corps corps;
+    Coordonnee tete;
     Coordonnee posPomme;
+    const int ID;
     int valPomme;
     // Itérateur qui donne la prochaine case qui remplacera la tête
-    std::vector<Coordonnee>::iterator iterateur;
+    Corps::iterator iterateur;
 };
 
 

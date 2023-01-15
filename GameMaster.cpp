@@ -16,6 +16,8 @@
 #include "Annexe.h"
 #include "Coordonnee.h"
 
+#include <iostream>
+
 GameMaster::GameMaster() {
 
 }
@@ -30,7 +32,6 @@ void GameMaster:: init() {
     fenetre.initFenetre(longeurFenetre, largeurFenetre);
 
     // Init serpents
-    serpents.resize(nbreSerpents);
 
     Snake::initTailleFenetre(largeurFenetre, longeurFenetre);
 
@@ -41,17 +42,26 @@ void GameMaster:: init() {
             position = {nbAleatoire(0,largeurFenetre), nbAleatoire(0,longeurFenetre)};
         } while (estOccupe(position));
 
-        serpents.push_back(Snake(position));
+        serpents.push_back(Snake(position, i));
     }
 }
 
 
 void GameMaster::update() {
-    pixels.resize(100);
+    pixels.clear();
 
-    // Update serpents
+    // Update serpents et controle s'ils mangent des autres
     for (Snake i : serpents) {
         i.bouge();
+        for (Snake j : serpents) {
+            if (j != i) {
+                for (size_t k = 0; k < j.getCorps().size(); ++k) {
+                    if (i.getTete() == j.getCorps()[k]) {
+                        //Snake::mangeSerpent(j,k);
+                    }
+                }
+            }
+        }
     }
 
     // Update Affichage

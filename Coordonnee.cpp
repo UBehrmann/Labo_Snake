@@ -10,6 +10,8 @@
 
 #include "Coordonnee.h"
 
+#include <iostream>
+
 int Coordonnee::getX() const {
     return x;
 }
@@ -17,6 +19,8 @@ int Coordonnee::getX() const {
 int Coordonnee::getY() const {
     return y;
 }
+
+Coordonnee::
 
 Coordonnee::Coordonnee(int x, int y, unsigned char r, unsigned char g, unsigned char b) : x(x), y(y), r(r), g
 (g), b(b) {}
