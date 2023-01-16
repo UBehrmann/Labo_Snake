@@ -12,7 +12,6 @@
 // Compilateur  MinGW w64 9.0
 //------------------------------------------------------------------------------
 
-#include <iostream>
 #include <cstdlib>
 #include "GameMaster.h"
 
@@ -20,8 +19,6 @@
 using namespace std;
 
 int main (int argc, char* args[]) {
-
-    cout << "Fonctionne?";
 
     GameMaster gm;
 

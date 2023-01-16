@@ -54,17 +54,21 @@ public:
 
     void bouge();
 
-    void mangeSerpent(Snake s, size_t k);
-
     Coordonnee getTete() const;
 
     const Corps &getCorps() const;
 
     Coordonnee &getPomme();
 
+    const int getId() const;
+
     void setTete();
 
     void serpentEstMange(Coordonnee impacte);
+
+    void serpentMange(size_t taille);
+
+    void serpentEstMort();
 
 private:
     Corps corps;

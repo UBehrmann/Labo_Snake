@@ -17,8 +17,7 @@
 #include "Coordonnee.h"
 #include <chrono>
 #include <thread>
-
-#include <iostream>
+#include <string> // Messages d'erreur
 
 using namespace std;
 
@@ -26,14 +25,14 @@ GameMaster::GameMaster() {
 
 }
 
-void GameMaster:: init() {
+void GameMaster::init() {
+
+    const string messageErreur = "Mauvaise saisie, veuillez recommencer.";
+
     // Saisies
-    int longeurFenetre = 100; // saisie("Longeur fenetre", "Longeur fenetre", 80, 200);
-    int largeurFenetre = 80; // saisie("", "Largeur fenetre", 80, 200);
-    size_t nbreSerpents = 5; // (size_t)saisie("", "Nbre de serpents", 5, 20);
-//    int longeurFenetre = saisie("Longeur fenetre", "Longeur fenetre", 80, 200);
-//    int largeurFenetre = saisie("", "Largeur fenetre", 80, 200);
-//    size_t nbreSerpents = (size_t)saisie("", "Nbre de serpents", 5, 20);
+    int longeurFenetre = saisie("Longeur fenetre", messageErreur, 80, 200);
+    int largeurFenetre = saisie("Largeur fenetre", messageErreur, 80, 200);
+    size_t nbreSerpents = (size_t)saisie("Nbre de serpents", messageErreur, 5, 20);
 
     // Init fenêtre
     fenetre.initFenetre(longeurFenetre, largeurFenetre);
@@ -101,17 +100,35 @@ void GameMaster::affichage() {
 void GameMaster::updateSerpents() {
 
 
-    // Update serpents et controle s'ils mangent des autres
+    // Update chaque serpent
     for (Snake& i : serpents) {
 
         i.bouge();
-
+        // Contrôle si le serpent mange un autre
         for (Snake& j : serpents) {
+            // Si ce n'est pas lui même
             if (j != i) {
+                // Défini à quel endroit le serpent mort l'autre
                 for (size_t k = 0; k < j.getCorps().size(); ++k) {
+                    // S'il mort
                     if (i.getTete() == j.getCorps()[k]) {
-                        i.mangeSerpent(j,k);
-                        j.serpentEstMange(j.getCorps()[k]);
+                        // S'il mort la tête il controle lequel et plus grand et tue l'autre
+                        if (j.getCorps()[k] == j.getTete()) {
+                            if (i.getCorps().size() > j.getCorps().size()) {
+//                                i.serpentMange(j.getCorps().size() * 10 / 6);
+//                                serpents.erase(find(serpents.begin(),serpents.end(),j));
+//                                j.serpentEstMort();
+                            }
+                            else {
+//                                j.serpentMange(i.getCorps().size() * 10 / 6);
+//                                serpents.erase(find(serpents.begin(),serpents.end(),i));
+//                                i.serpentEstMort();
+                            }
+                        }
+                        else {
+                            // Celui qui est mangé
+                            j.serpentEstMange(j.getCorps()[k]);
+                        }
                     }
                 }
             }

@@ -102,37 +102,27 @@ void Snake::bouge() {
 
 // https://stackoverflow.com/questions/583076/c-c-changing-the-value-of-a-const
 void Snake::initTailleFenetre(int largeurFenetreRecu, int longeurFenetreRecu) {
-
     largeurFenetre = largeurFenetreRecu;
     longeurFenetre = longeurFenetreRecu;
-
 }
 
 void Snake::setTete() {
     Coordonnee bas = DEPLACEMENTS_AUTORISE[2];
 
     for (size_t i = 0; i < corps.size(); ++i) {
-        corps.at(i).setX(corps.at(i).getX() +1);
+        corps.at(i) += DEPLACEMENTS_AUTORISE.at(1);
         corps.at(i).setCouleur(0,0,0);
     }
 
 }
 
 void Snake::mangePomme(Corps::iterator iterateur) {
-
     ajouteCorps(iterateur, valPomme);
-
     creationPomme();
 }
 
-void Snake::mangeSerpent(Snake s, size_t k) {
-   //s.getCorps().erase(s.getCorps().begin() + k);
-
-//    corps.insert(corps.end(), s.corps.size() - k, Coordonnee(tete.getX(), tete.getY(), 0,0,0));
-}
-
 Snake::~Snake() {
-
+    corps.clear();
 }
 
 void Snake::ajouteCorps(Corps::iterator iterateur, int taille) {
@@ -143,10 +133,24 @@ void Snake::serpentEstMange(Coordonnee impacte) {
     Corps::iterator iterateurImpacte = std::find(corps.begin(), corps.end(), impacte);
     Corps::iterator iterateurTete = std::find(corps.begin(), corps.end(), tete);
 
-    if(iterateurTete < iterateurImpacte) {
+    if (iterateurTete < iterateurImpacte) {
         corps.erase(iterateurTete + 1, iterateurImpacte);
     }
     else {
         corps.erase(corps.begin(), iterateurImpacte);
+        corps.erase(iterateurTete, corps.end());
     }
+}
+
+void Snake::serpentMange(size_t taille) {
+    ajouteCorps(std::find(corps.begin(),corps.end(),tete),taille);
+}
+
+void Snake::serpentEstMort() {
+    std::cout << ID << " est mort" << std::endl;
+    this->~Snake();
+}
+
+const int Snake::getId() const {
+    return ID;
 }
