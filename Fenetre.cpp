@@ -70,8 +70,8 @@ void Fenetre::initFenetre(int largeurFenetre, int longeurFenetre, float scale) {
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_CreateWindowAndRenderer(largeurFenetre  * (int)scale,
-                                longeurFenetre * (int)scale,
+    SDL_CreateWindowAndRenderer(this->largeurFenetre  * (int)this->scale,
+                                this->longeurFenetre * (int)this->scale,
                                 SDL_WINDOW_SHOWN,
                                 &window, &renderer);
 

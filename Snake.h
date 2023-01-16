@@ -42,7 +42,7 @@ public:
 
     Snake(); // Besoin pour initialiser le vecteur de Snake
 
-    Snake(Coordonnee position, const int id);
+    Snake(Coordonnee position, int id);
 
     static void initTailleFenetre(int largeurFenetre, int longeurFenetre);
 
@@ -52,15 +52,15 @@ public:
 
     void bouge();
 
-    bool mangePomme;
-
     static void mangeSerpent(Snake s, size_t k);
 
     Coordonnee getTete() const;
 
     const Corps &getCorps() const;
 
-    const Coordonnee &getPomme() const;
+    Coordonnee &getPomme();
+
+    void setTete();
 
 private:
     Corps corps;
@@ -70,6 +70,8 @@ private:
     int valPomme;
     // Itérateur qui donne la prochaine case qui remplacera la tête
     Corps::iterator iterateur;
+
+    void mangePomme();
 };
 
 

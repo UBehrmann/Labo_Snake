@@ -15,8 +15,12 @@
 #include "GameMaster.h"
 #include "Annexe.h"
 #include "Coordonnee.h"
+#include <chrono>
+#include <thread>
 
 #include <iostream>
+
+using namespace std;
 
 GameMaster::GameMaster() {
 
@@ -48,31 +52,11 @@ void GameMaster:: init() {
 
 
 void GameMaster::update() {
-    pixels.clear();
 
-    // Update serpents et controle s'ils mangent des autres
-    for (Snake i : serpents) {
-        i.bouge();
-        for (Snake j : serpents) {
-            if (j != i) {
-                for (size_t k = 0; k < j.getCorps().size(); ++k) {
-                    if (i.getTete() == j.getCorps()[k]) {
-                        //Snake::mangeSerpent(j,k);
-                    }
-                }
-            }
-        }
-    }
-
+    updateSerpents();
     // Update Affichage
 
-    // Ajoute tous les corps des serpents et les pommes a un vecteur de pixels
-    for (const Snake& serpent : serpents) {
-        pixels.insert(pixels.end(), serpent.getCorps().begin(), serpent.getCorps().end());
-        pixels.push_back(serpent.getPomme());
-    }
-
-    fenetre.update(pixels);
+    affichage();
 }
 
 bool GameMaster::appIsRunning() const {
@@ -85,6 +69,50 @@ bool GameMaster::estOccupe(Coordonnee c) {
             return true;
 
     return false;
+}
+
+void GameMaster::affichage() {
+    std::vector<Coordonnee> pixels;
+
+    static int y = 0;
+    int x = 0;
+
+    if(y > 80)
+        y = 0;
+    else
+        y++;
+
+    pixels.push_back( Coordonnee(x,y,0,0,0) );
+
+    // Ajoute tous les corps des serpents et les pommes a un vecteur de pixels
+    for (Snake& serpent : serpents) {
+        pixels.insert(pixels.end(), serpent.getCorps().begin(), serpent.getCorps().end());
+        pixels.push_back(serpent.getPomme());
+    }
+
+    fenetre.update(pixels);
+
+    this_thread::sleep_for(100ms);
+}
+
+void GameMaster::updateSerpents() {
+
+
+    // Update serpents et controle s'ils mangent des autres
+    for (Snake& i : serpents) {
+
+        i.bouge();
+
+        for (Snake j : serpents) {
+            if (j != i) {
+                for (size_t k = 0; k < j.getCorps().size(); ++k) {
+                    if (i.getTete() == j.getCorps()[k]) {
+                        //Snake::mangeSerpent(j,k);
+                    }
+                }
+            }
+        }
+    }
 }
 
 

@@ -24,7 +24,7 @@ int Snake::largeurFenetre = 80;
 Snake::Snake() : ID(-1){
 }
 
-Snake::Snake(Coordonnee position, int id) : ID(id){
+Snake:: Snake(Coordonnee position, int id) : ID(id){
 
     // Assigne la position aléatoire à la tête
     tete = position;
@@ -32,7 +32,7 @@ Snake::Snake(Coordonnee position, int id) : ID(id){
 
     // Définir toutes les parties du corps à la même position que la tête
     for (size_t i = 0; i < 10; ++i) {       //Définir const taille Serpent au départ
-        corps.push_back(tete);
+        corps.push_back(position);
         corps[i].setCouleur(0,0,0);
     }
 
@@ -46,10 +46,10 @@ Coordonnee Snake::getTete() const{
 }
 
 const Corps &Snake::getCorps() const {
-    return corps;
+    return this->corps;
 }
 
-const Coordonnee &Snake::getPomme() const {
+Coordonnee &Snake::getPomme() {
     return posPomme;
 }
 
@@ -63,7 +63,7 @@ void Snake::creationPomme() {
 //    this->posPomme = {, , }; //
     posPomme.setXY(nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre));
     posPomme.setCouleur(0, 255, 0);
-    valPomme = nbAleatoire(1,10);
+    valPomme = nbAleatoire(2,10);
 }
 
 void Snake::bouge() {
@@ -92,7 +92,7 @@ void Snake::bouge() {
 
     // Controle si il a atteint la pomme
     if (tete == posPomme) {
-        creationPomme();
+        mangePomme();
     }
 }
 
@@ -107,4 +107,47 @@ void Snake::initTailleFenetre(int largeurFenetreRecu, int longeurFenetreRecu) {
     largeurFenetre = largeurFenetreRecu;
     longeurFenetre = longeurFenetreRecu;
 
+}
+
+void Snake::setTete() {
+    Coordonnee bas = DEPLACEMENTS_AUTORISE[2];
+
+    for (size_t i = 0; i < corps.size(); ++i) {
+        corps.at(i).setX(corps.at(i).getX() +1);
+        corps.at(i).setCouleur(0,0,0);
+    }
+
+}
+
+void Snake::mangePomme() {
+
+    Corps::iterator iter;
+    iter = iterateur;
+
+    // Si l'itérateur arrive au bout du corps revenir juste après la tête
+    if (iter == corps.begin()) {
+        iter = corps.end() - 1;
+    }
+    else
+        --iter;
+
+    if (iter > corps.end() )
+    {
+        iter = corps.end();
+    }
+
+    if ( iter < corps.begin() ){
+        iter = corps.begin();
+    }
+
+    iter = std::find(corps.begin(), corps.end(), tete);
+
+
+    for (int i = 0; i < valPomme; ++i) {
+        corps.insert(corps.end(),Coordonnee(iter->getX(), iter->getY(), 0,0,0));
+    }
+
+
+
+    creationPomme();
 }

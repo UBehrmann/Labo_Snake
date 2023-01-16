@@ -25,12 +25,12 @@ Coordonnee::
 Coordonnee::Coordonnee(int x, int y, unsigned char r, unsigned char g, unsigned char b) : x(x), y(y), r(r), g
 (g), b(b) {}
 
-Coordonnee& Coordonnee::operator+=(const Coordonnee c) {
+void Coordonnee::operator+=(const Coordonnee c) {
     x += c.x;
     y += c.y;
 }
 
-Coordonnee& Coordonnee::operator=(const Coordonnee c) {
+void Coordonnee::operator=(const Coordonnee c) {
     x = c.x;
     y = c.y;
 }
@@ -66,11 +66,11 @@ unsigned char Coordonnee::getB() const {
 }
 
 void Coordonnee::setX(int x) {
-    Coordonnee::x = x;
+    this->x = x;
 }
 
 void Coordonnee::setY(int y) {
-    Coordonnee::y = y;
+    this->y = y;
 }
 
 void Coordonnee::setXY(int x, int y) {

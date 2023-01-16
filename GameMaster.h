@@ -31,12 +31,17 @@ public:
 
     bool estOccupe(Coordonnee c);
 
+
 private:
     std::vector<Snake> serpents;
 
     Fenetre fenetre;
 
-    std::vector<Coordonnee> pixels;
+
+
+    void affichage();
+
+    void updateSerpents();
 };
 
 

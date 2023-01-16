@@ -33,9 +33,9 @@ public:
 
     unsigned char getB() const;
 
-    Coordonnee& operator+=(const Coordonnee c);
+    void operator+=(const Coordonnee c);
 
-    Coordonnee& operator=(const Coordonnee c);
+    void operator=(const Coordonnee c);
 
     bool operator!=(const Coordonnee c);
 
