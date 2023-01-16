@@ -42,21 +42,21 @@ int saisie(const string& msgInvite, const string& msgErreur, const int& min, con
     int         saisie;    // ne peuvent pas être déclarés
     bool        erreur;    // ... dans la boucle
 
-//    do {
-//        // saisie et vérification
-//        cout << msgInvite << " [" << min << " - " << max << "] : ";
-//        erreur = not(cin >> saisie) or saisie < min or saisie > max;
-//
-//        // gestion du flux
-//        if (erreur) {
-//            cout << msgErreur << endl;
-//            cin.clear();
-//        }
-//
-//        // vider buffer
-//        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//
-//    } while(erreur);
+    do {
+        // saisie et vérification
+        cout << msgInvite << " [" << min << " - " << max << "] : ";
+        erreur = not(cin >> saisie) or saisie < min or saisie > max;
+
+        // gestion du flux
+        if (erreur) {
+            cout << msgErreur << endl;
+            cin.clear();
+        }
+
+        // vider buffer
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    } while(erreur);
     // retour de la valeur saisie
     return saisie;
 }

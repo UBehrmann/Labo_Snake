@@ -30,7 +30,10 @@ void GameMaster:: init() {
     // Saisies
     int longeurFenetre = 100; // saisie("Longeur fenetre", "Longeur fenetre", 80, 200);
     int largeurFenetre = 80; // saisie("", "Largeur fenetre", 80, 200);
-    size_t nbreSerpents = 20; // (size_t)saisie("", "Nbre de serpents", 5, 20);
+    size_t nbreSerpents = 5; // (size_t)saisie("", "Nbre de serpents", 5, 20);
+//    int longeurFenetre = saisie("Longeur fenetre", "Longeur fenetre", 80, 200);
+//    int largeurFenetre = saisie("", "Largeur fenetre", 80, 200);
+//    size_t nbreSerpents = (size_t)saisie("", "Nbre de serpents", 5, 20);
 
     // Init fenêtre
     fenetre.initFenetre(longeurFenetre, largeurFenetre);
@@ -103,11 +106,12 @@ void GameMaster::updateSerpents() {
 
         i.bouge();
 
-        for (Snake j : serpents) {
+        for (Snake& j : serpents) {
             if (j != i) {
                 for (size_t k = 0; k < j.getCorps().size(); ++k) {
                     if (i.getTete() == j.getCorps()[k]) {
-                        //Snake::mangeSerpent(j,k);
+                        i.mangeSerpent(j,k);
+                        j.serpentEstMange(j.getCorps()[k]);
                     }
                 }
             }

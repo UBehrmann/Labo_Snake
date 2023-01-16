@@ -26,6 +26,8 @@ Snake::Snake() : ID(-1){
 
 Snake:: Snake(Coordonnee position, int id) : ID(id){
 
+    corps.reserve(200);
+
     // Assigne la position aléatoire à la tête
     tete = position;
     tete.setCouleur(0,0,0);
@@ -35,8 +37,6 @@ Snake:: Snake(Coordonnee position, int id) : ID(id){
         corps.push_back(position);
         corps[i].setCouleur(0,0,0);
     }
-
-    iterateur = corps.begin() + 1;
 
     creationPomme();
 }
@@ -69,13 +69,16 @@ void Snake::creationPomme() {
 void Snake::bouge() {
 
 
+
     // Déplacement du corps (dernier pixel prend la place de la tête)
-    *iterateur = tete;
+
+    // Itérateur qui donne la prochaine case qui remplacera la tête
+    Corps::iterator iterateur = std::find(corps.begin(), corps.end(), tete);
     ++iterateur;
 
     // Si l'itérateur arrive au bout du corps revenir juste après la tête
-    if (iterateur == corps.end()) {
-        iterateur = corps.begin() + 1;
+    if (iterateur >= corps.end()) {
+        iterateur = corps.begin();
     }
 
     // Définition de la nouvelle position de la tête
@@ -88,16 +91,12 @@ void Snake::bouge() {
     else {
         tete += DEPLACEMENTS_AUTORISE[distVerticale < 0 ? 0 : 2];
     }
-    corps.at(0) = tete;
+    *iterateur = tete;
 
     // Controle si il a atteint la pomme
     if (tete == posPomme) {
-        mangePomme();
+        mangePomme(iterateur);
     }
-}
-
-void mangeSerpent(Snake s, size_t k) {
-   // s.getCorps().erase(s.getCorps().begin() + k, s.getCorps().end());
 }
 
 
@@ -119,35 +118,35 @@ void Snake::setTete() {
 
 }
 
-void Snake::mangePomme() {
+void Snake::mangePomme(Corps::iterator iterateur) {
 
-    Corps::iterator iter;
-    iter = iterateur;
-
-    // Si l'itérateur arrive au bout du corps revenir juste après la tête
-    if (iter == corps.begin()) {
-        iter = corps.end() - 1;
-    }
-    else
-        --iter;
-
-    if (iter > corps.end() )
-    {
-        iter = corps.end();
-    }
-
-    if ( iter < corps.begin() ){
-        iter = corps.begin();
-    }
-
-    iter = std::find(corps.begin(), corps.end(), tete);
-
-
-    for (int i = 0; i < valPomme; ++i) {
-        corps.insert(corps.end(),Coordonnee(iter->getX(), iter->getY(), 0,0,0));
-    }
-
-
+    ajouteCorps(iterateur, valPomme);
 
     creationPomme();
+}
+
+void Snake::mangeSerpent(Snake s, size_t k) {
+   //s.getCorps().erase(s.getCorps().begin() + k);
+
+//    corps.insert(corps.end(), s.corps.size() - k, Coordonnee(tete.getX(), tete.getY(), 0,0,0));
+}
+
+Snake::~Snake() {
+
+}
+
+void Snake::ajouteCorps(Corps::iterator iterateur, int taille) {
+    corps.insert(iterateur, taille, Coordonnee(tete.getX(), tete.getY(), 0,0,0));
+}
+
+void Snake::serpentEstMange(Coordonnee impacte) {
+    Corps::iterator iterateurImpacte = std::find(corps.begin(), corps.end(), impacte);
+    Corps::iterator iterateurTete = std::find(corps.begin(), corps.end(), tete);
+
+    if(iterateurTete < iterateurImpacte) {
+        corps.erase(iterateurTete + 1, iterateurImpacte);
+    }
+    else {
+        corps.erase(corps.begin(), iterateurImpacte);
+    }
 }
