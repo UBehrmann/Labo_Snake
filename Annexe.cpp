@@ -12,11 +12,11 @@
 // Compilateur  MinGW w64 9.0
 //------------------------------------------------------------------------------
 
+#include "annexe.h"
+
 #include <random>   //Pour les nombres aléatoire
 #include <iostream> //Pour les saisies
 #include <limits>   //Pour vider le buffer
-
-#include "annexe.h"
 
 using namespace std;
 

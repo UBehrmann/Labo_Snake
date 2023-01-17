@@ -15,29 +15,29 @@
 #include "Snake.h"
 #include "Annexe.h"
 
-#include <cmath>
-#include <iostream>
+#include <iostream> // Pour annoncer les morts
 
-int Snake::longeurFenetre = 100;
-int Snake::largeurFenetre = 80;
+int Snake::longeurFenetre;
+int Snake::largeurFenetre;
 
-Snake::Snake() : ID(-1){
+Snake::Snake() : ID(-1), valPomme(1){
 }
 
-Snake:: Snake(Coordonnee position, int id) : ID(id){
-
+Snake:: Snake(Coordonnee position, int id) : ID(id), valPomme(1){
+    // Réserve de la place pour que le serpent puisse grandir
     corps.reserve(200);
 
     // Assigne la position aléatoire à la tête
     tete = position;
     tete.setCouleur(0,0,0);
 
-    // Définir toutes les parties du corps à la même position que la tête
-    for (size_t i = 0; i < 10; ++i) {       //Définir const taille Serpent au départ
+    // Défini toutes les parties du corps à la même position que la tête
+    for (size_t i = 0; i < size_t(tailleSerpent); ++i) {
         corps.push_back(position);
         corps[i].setCouleur(0,0,0);
     }
 
+    // Crée une pomme pour le serpent
     creationPomme();
 }
 
@@ -53,25 +53,25 @@ Coordonnee &Snake::getPomme() {
     return posPomme;
 }
 
-bool Snake::operator!=(const Snake s) {
+bool Snake::operator!=(const Snake& s) const {
     return this->ID != s.ID;
-
 }
 
+Snake& Snake::operator=(const Snake& s) {
+    tete = s.tete;
+    corps = s.corps;
+    ID = s.ID;
+    return *this;
+}
 
 void Snake::creationPomme() {
-//    this->posPomme = {, , }; //
+    // Place une pomme aléatoirement dans la fenêtre et lui assigne une valeur
     posPomme.setXY(nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre));
     posPomme.setCouleur(0, 255, 0);
     valPomme = nbAleatoire(2,10);
 }
 
 void Snake::bouge() {
-
-
-
-    // Déplacement du corps (dernier pixel prend la place de la tête)
-
     // Itérateur qui donne la prochaine case qui remplacera la tête
     Corps::iterator iterateur = std::find(corps.begin(), corps.end(), tete);
     ++iterateur;
@@ -81,10 +81,11 @@ void Snake::bouge() {
         iterateur = corps.begin();
     }
 
-    // Définition de la nouvelle position de la tête
+    // Trouve la position relative à la pomme
     int distHorizontale = posPomme.getX() - tete.getX();
     int distVerticale   = posPomme.getY() - tete.getY();
 
+    // Dirige le serpent en direction de la pomme
     if (abs(distHorizontale) > abs(distVerticale)) {
         tete += DEPLACEMENTS_AUTORISE[distHorizontale < 0 ? 3 : 1];
     }
@@ -93,7 +94,7 @@ void Snake::bouge() {
     }
     *iterateur = tete;
 
-    // Controle si il a atteint la pomme
+    // Controle si le serpent a atteint la pomme
     if (tete == posPomme) {
         mangePomme(iterateur);
     }
@@ -109,30 +110,35 @@ void Snake::initTailleFenetre(int largeurFenetreRecu, int longeurFenetreRecu) {
 void Snake::setTete() {
     Coordonnee bas = DEPLACEMENTS_AUTORISE[2];
 
-    for (size_t i = 0; i < corps.size(); ++i) {
-        corps.at(i) += DEPLACEMENTS_AUTORISE.at(1);
-        corps.at(i).setCouleur(0,0,0);
+    for (Coordonnee& i : corps) {
+        i += DEPLACEMENTS_AUTORISE.at(1);
+        i.setCouleur(0,0,0);
     }
 
 }
 
 void Snake::mangePomme(Corps::iterator iterateur) {
+    // Fait grandir le serpent et place une nouvelle pomme
     ajouteCorps(iterateur, valPomme);
     creationPomme();
 }
 
 Snake::~Snake() {
+    // Vide toutes les parties du corps
     corps.clear();
 }
 
 void Snake::ajouteCorps(Corps::iterator iterateur, int taille) {
-    corps.insert(iterateur, taille, Coordonnee(tete.getX(), tete.getY(), 0,0,0));
+    // Ajoute des parties tout à la fin du corps
+    corps.insert(iterateur, size_t(taille), Coordonnee(tete.getX(), tete.getY(), 0,0,0));
 }
 
 void Snake::serpentEstMange(Coordonnee impacte) {
+    // Déclare des itérateurs pour la position de la tête et de la morçure
     Corps::iterator iterateurImpacte = std::find(corps.begin(), corps.end(), impacte);
     Corps::iterator iterateurTete = std::find(corps.begin(), corps.end(), tete);
 
+    // Efface le corps nécessaire en fonction de l'impacte
     if (iterateurTete < iterateurImpacte) {
         corps.erase(iterateurTete + 1, iterateurImpacte);
     }
@@ -142,15 +148,17 @@ void Snake::serpentEstMange(Coordonnee impacte) {
     }
 }
 
-void Snake::serpentMange(size_t taille) {
+void Snake::serpentMange(int taille) {
+    // Ajoute des parties au serpent qui vient de mordre un autre
     ajouteCorps(std::find(corps.begin(),corps.end(),tete),taille);
 }
 
 void Snake::serpentEstMort() {
+    // Met à jour les statistique de mort et détruit le serpent mort
     std::cout << ID << " est mort" << std::endl;
     this->~Snake();
 }
 
-const int Snake::getId() const {
+int Snake::getId() const {
     return ID;
 }

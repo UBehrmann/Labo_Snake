@@ -1,16 +1,18 @@
-// PRG1_E
-//---------------------------------------------------------------------------------
-// Fichier        : Terrain.cpp
-// Auteur(s)      : Calum Quinn et Urs Behrmann
-// But            :
-// Modifications  :
-// Remarque(s)    : NILL
-// Compilateur    : MinGW w64 9.0 / C++20
-//---------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+// Fichier      Coordonnee.cpp
+// Auteur       Urs Behrmann et Calum Quinn
+// Date         09.01.2023
+//
+// But
+//
+// Remarque
+//
+// Modifs       n/a
+//
+// Compilateur  MinGW w64 9.0
+//------------------------------------------------------------------------------
 
 #include "Coordonnee.h"
-
-#include <iostream>
 
 int Coordonnee::getX() const {
     return x;
@@ -20,8 +22,6 @@ int Coordonnee::getY() const {
     return y;
 }
 
-Coordonnee::
-
 Coordonnee::Coordonnee(int x, int y, unsigned char r, unsigned char g, unsigned char b) : x(x), y(y), r(r), g
 (g), b(b) {}
 
@@ -30,16 +30,17 @@ void Coordonnee::operator+=(const Coordonnee c) {
     y += c.y;
 }
 
-void Coordonnee::operator=(const Coordonnee c) {
+Coordonnee& Coordonnee::operator=(const Coordonnee c) {
     x = c.x;
     y = c.y;
+    return *this;
 }
 
-bool Coordonnee::operator!=(const Coordonnee c){
+bool Coordonnee::operator!=(const Coordonnee c) const{
     return !(*this == c);
 }
 
-bool Coordonnee::operator==(const Coordonnee c){
+bool Coordonnee::operator==(const Coordonnee c) const{
     return x == c.x && y == c.y;
 }
 
