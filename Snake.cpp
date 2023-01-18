@@ -17,6 +17,9 @@
 
 #include <iostream> // Pour annoncer les morts
 
+#define VERT 0,255,0
+#define COULEUR_SERPENT 0,0,0
+
 int Snake::longeurFenetre;
 int Snake::largeurFenetre;
 
@@ -29,12 +32,11 @@ Snake:: Snake(Coordonnee position, int id) : ID(id), valPomme(1){
 
     // Assigne la position aléatoire à la tête
     tete = position;
-    tete.setCouleur(0,0,0);
+    position.setCouleur(COULEUR_SERPENT);
 
     // Défini toutes les parties du corps à la même position que la tête
     for (size_t i = 0; i < size_t(tailleSerpent); ++i) {
         corps.push_back(position);
-        corps[i].setCouleur(0,0,0);
     }
 
     // Crée une pomme pour le serpent
@@ -54,7 +56,7 @@ Coordonnee &Snake::getPomme() {
 }
 
 bool Snake::operator!=(const Snake& s) const {
-    return this->ID != s.ID;
+    return !(*this == s);
 }
 
 Snake& Snake::operator=(const Snake& s) {
@@ -67,7 +69,7 @@ Snake& Snake::operator=(const Snake& s) {
 void Snake::creationPomme() {
     // Place une pomme aléatoirement dans la fenêtre et lui assigne une valeur
     posPomme.setXY(nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre));
-    posPomme.setCouleur(0, 255, 0);
+    posPomme.setCouleur(VERT);
     valPomme = nbAleatoire(2,10);
 }
 
@@ -112,7 +114,6 @@ void Snake::setTete() {
 
     for (Coordonnee& i : corps) {
         i += DEPLACEMENTS_AUTORISE.at(1);
-        i.setCouleur(0,0,0);
     }
 
 }
@@ -130,7 +131,7 @@ Snake::~Snake() {
 
 void Snake::ajouteCorps(Corps::iterator iterateur, int taille) {
     // Ajoute des parties tout à la fin du corps
-    corps.insert(iterateur, size_t(taille), Coordonnee(tete.getX(), tete.getY(), 0,0,0));
+    corps.insert(iterateur, size_t(taille), Coordonnee(tete.getX(), tete.getY(), COULEUR_SERPENT));
 }
 
 void Snake::serpentEstMange(Coordonnee impacte) {
@@ -154,11 +155,15 @@ void Snake::serpentMange(int taille) {
 }
 
 void Snake::serpentEstMort() {
-    // Met à jour les statistique de mort et détruit le serpent mort
+    // Met à jour les statistiques de mort et détruit le serpent mort
     std::cout << ID << " est mort" << std::endl;
     this->~Snake();
 }
 
 int Snake::getId() const {
     return ID;
+}
+
+bool Snake::operator==(const Snake& s) const {
+    return this->ID == s.ID;
 }

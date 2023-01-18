@@ -54,6 +54,11 @@ public:
     //  longeurFenetre      : Longeur de la fenêtre
     static void initTailleFenetre(int largeurFenetre, int longeurFenetre);
 
+    // Fonction qui défini l'opérateur == entre deux serpents
+    // Paramètres
+    //  s                   : serpent
+    bool operator==(const Snake& s) const;
+
     // Fonction qui défini l'opérateur != entre deux serpents
     // Paramètres
     //  s                   : serpent

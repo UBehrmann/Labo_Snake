@@ -29,12 +29,12 @@ void GameMaster::init() {
     const string messageErreur = "Mauvaise saisie, veuillez recommencer.";
 
     // Saisies utilisateur
-    int longeurFenetre = saisie("Longeur fenetre", messageErreur, 80, 200);
-    int largeurFenetre = saisie("Largeur fenetre", messageErreur, 80, 200);
-    size_t nbreSerpents = (size_t)saisie("Nbre de serpents", messageErreur, 5, 20);
+    int longeurFenetre = 80; // saisie("Longeur fenetre", messageErreur, 80, 200);
+    int largeurFenetre = 100; // saisie("Largeur fenetre", messageErreur, 80, 200);
+    size_t nbreSerpents = 20; // (size_t)saisie("Nbre de serpents", messageErreur, 5, 20);
 
     // Initialisation fenêtre
-    fenetre.initFenetre(longeurFenetre, largeurFenetre);
+    fenetre.initFenetre(largeurFenetre, longeurFenetre);
     Snake::initTailleFenetre(largeurFenetre, longeurFenetre);
 
     // Remplir vecteur de serpents en contrôlant de ne pas en avoir au même endroit
@@ -59,9 +59,9 @@ bool GameMaster::appIsRunning() const {
     return fenetre.appIsRunning;
 }
 
-bool GameMaster::estOccupe(Coordonnee c) {
-    for ( const Snake& s : serpents)
-        if ( s.getTete() == c )
+bool GameMaster::estOccupe(Coordonnee coordonnee) {
+    for ( const Snake& serpent : serpents)
+        if ( serpent.getTete() == coordonnee )
             return true;
 
     return false;
@@ -88,39 +88,57 @@ void GameMaster::updateSerpents() {
 
 
     // Met à jour chaque serpent
-    for (Snake& i : serpents) {
+    for (Snake& i : serpents)
         i.bouge();
-        // Contrôle tous les serpents
+
+    // test pour collisions entre les serpents
+    for (Snake& i : serpents) {
         for (Snake& j : serpents) {
-            // Si ce n'est pas lui même
-            if (j != i) {
-                // Contrôle toutes les parties du corp
-                for (size_t k = 0; k < j.getCorps().size(); ++k) {
-                    // S'il mort
-                    if (i.getTete() == j.getCorps()[k]) {
-                        // La tête
-                        if (j.getCorps()[k] == j.getTete()) {
-                            if (i.getCorps().size() > j.getCorps().size()) {
-                                i.serpentMange(j.getCorps().size() * 10 / 6);
-                                serpents.erase(find(serpents.begin(),serpents.end(),j));
-                                j.serpentEstMort();
-                            }
-                            else {
-                                j.serpentMange(i.getCorps().size() * 10 / 6);
-                                serpents.erase(find(serpents.begin(),serpents.end(),i));
-                                i.serpentEstMort();
-                            }
-                        }
-                        // Ailleurs que la tête
-                        else {
-                            // Celui qui est mangé
-                            j.serpentEstMange(j.getCorps()[k]);
-                        }
-                    }
-                }
+            // Si ce n'est pas lui-même et qu'il y a une collision
+            if (j != i && checkCollision(i, j)) {
+
+                gestionCollision(i, j);
             }
         }
     }
 }
 
+void GameMaster::serpentEstMort(Snake& serpentMort) {
 
+    // Affichage de texte de mort
+    serpentMort.serpentEstMort();
+
+    // Supprime le serpentMort du vecteur serpents
+    serpents.erase(find(serpents.begin(), serpents.end(), serpentMort));
+}
+
+bool GameMaster::checkCollision(Snake& serpent1, Snake& serpent2){
+    // Check si la tete du serpent1 est sur une position du corps du serpent2
+    return serpent2.getCorps().end() != find(serpent2.getCorps().begin(), serpent2.getCorps().end(), serpent1.getTete());
+}
+
+void GameMaster::gestionCollision(Snake& serpent1, Snake& serpent2){
+
+    // test si c'est une collision entre deux tete ou pas
+    if (serpent1.getTete() == serpent2.getTete()){
+
+        // trouve le serpent le plus grand et tue l'autre
+        if (serpent1.getCorps().size() > serpent2.getCorps().size()) {
+            serpent1.serpentMange(serpent2.getCorps().size() * 10 / 6);
+            serpentEstMort(serpent2);
+        }
+        else {
+            serpent2.serpentMange(serpent1.getCorps().size() * 10 / 6);
+            serpentEstMort(serpent1);
+        }
+    }
+    else{
+        // Trouve la position de l'impacte du serpent attaque
+        for (size_t k = 0; k < serpent2.getCorps().size(); ++k) {
+            if(serpent1.getTete() == serpent2.getCorps()[k]){
+                serpent2.serpentEstMange(serpent2.getCorps()[k]);
+                break;
+            }
+        }
+    }
+}
