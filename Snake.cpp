@@ -154,9 +154,9 @@ void Snake::serpentMange(int taille) {
     ajouteCorps(std::find(corps.begin(),corps.end(),tete),taille);
 }
 
-void Snake::serpentEstMort() {
+void Snake::serpentEstMort(Snake& tueur) {
     // Met à jour les statistiques de mort et détruit le serpent mort
-    std::cout << ID << " est mort" << std::endl;
+    std::cout << tueur.ID << " a tue " << ID << std::endl;
     this->~Snake();
 }
 

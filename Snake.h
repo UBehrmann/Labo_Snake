@@ -101,7 +101,7 @@ public:
     void serpentMange(int taille);
 
     // Fonction qui détruit un serpent mort
-    void serpentEstMort();
+    void serpentEstMort(Snake& tueur);
 
 private:
     Corps corps;

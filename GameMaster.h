@@ -107,7 +107,7 @@ private:
      * @return              : void
      * @throws              : NIL
      */
-    void serpentEstMort(Snake& serpentMort);
+    void serpentEstMort(Snake& serpentMort, Snake& serpentTueur);
 
     /**
      * @name 	            : checkCollision
