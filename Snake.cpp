@@ -3,7 +3,8 @@
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
-// But
+// But          Class qui contient les donnees pour representer un serpent dans le terrain de jeu et des fonctions
+//              pour les differents evenements qui peuvent lui etre aplique
 //
 // Remarque
 //
@@ -17,14 +18,13 @@
 
 #include <iostream> // Pour annoncer les morts
 
-#define VERT 0,255,0
+#define VERT_POMME 0,255,0
 #define COULEUR_SERPENT 0,0,0
 
 int Snake::longeurFenetre;
 int Snake::largeurFenetre;
 
-Snake::Snake() : ID(-1), valPomme(1){
-}
+Snake::Snake() : ID(-1), valPomme(1){}
 
 Snake:: Snake(Coordonnee position, int id) : ID(id), valPomme(1){
     // Réserve de la place pour que le serpent puisse grandir
@@ -39,7 +39,6 @@ Snake:: Snake(Coordonnee position, int id) : ID(id), valPomme(1){
         corps.push_back(position);
     }
 
-    // Crée une pomme pour le serpent
     creationPomme();
 }
 
@@ -69,7 +68,7 @@ Snake& Snake::operator=(const Snake& s) {
 void Snake::creationPomme() {
     // Place une pomme aléatoirement dans la fenêtre et lui assigne une valeur
     posPomme.setXY(nbAleatoire(0, largeurFenetre), nbAleatoire(0, longeurFenetre));
-    posPomme.setCouleur(VERT);
+    posPomme.setCouleur(VERT_POMME);
     valPomme = nbAleatoire(2,10);
 }
 
@@ -107,15 +106,6 @@ void Snake::bouge() {
 void Snake::initTailleFenetre(int largeurFenetreRecu, int longeurFenetreRecu) {
     largeurFenetre = largeurFenetreRecu;
     longeurFenetre = longeurFenetreRecu;
-}
-
-void Snake::setTete() {
-    Coordonnee bas = DEPLACEMENTS_AUTORISE[2];
-
-    for (Coordonnee& i : corps) {
-        i += DEPLACEMENTS_AUTORISE.at(1);
-    }
-
 }
 
 void Snake::mangePomme(Corps::iterator iterateur) {
@@ -158,10 +148,6 @@ void Snake::serpentEstMort(Snake& tueur) {
     // Met à jour les statistiques de mort et détruit le serpent mort
     std::cout << tueur.ID << " a tue " << ID << std::endl;
     this->~Snake();
-}
-
-int Snake::getId() const {
-    return ID;
 }
 
 bool Snake::operator==(const Snake& s) const {
