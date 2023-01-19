@@ -3,7 +3,7 @@
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
-// But
+// But          Class qui sert a stocker et transmettre des donnees de position et de couleur
 //
 // Remarque
 //
@@ -19,68 +19,151 @@
 class Coordonnee {
 public:
 
-    // Constructeur par défaut met en blanc
+    /**
+     * @name        : Coordonnee
+     *
+     * @but         : Constructeur de Coordonnee
+     *
+     * @param x     : coordonnee x
+     * @param y     : coordonnee y
+     * @param r     : quantite de rouge
+     * @param g     : quantite de vert
+     * @param b     : quantite de bleu
+     * @return      : void
+     * @throws      : NIL
+     */
     Coordonnee() : x(0), y(0), r(255), g(255), b(255) {};
 
-    // Constructeur
+    /**
+     * @name        : Coordonnee
+     *
+     * @but         : Constructeur de Coordonnee dans lequel la couleur est sette a blanc
+     *
+     * @param x     : coordonnee x
+     * @param y     : coordonnee y
+     * @return      : void
+     * @throws      : NIL
+     */
     Coordonnee(int x, int y, unsigned char r = 255, unsigned char g = 255, unsigned char b = 255);
 
-    // Fonction qui défini la couleur d'un pixel
-    // Paramètres
-    //  r      : quantité de rouge
-    //  g      : quantité de vert
-    //  b      : quantité de bleu
+    /**
+     * @name        : setCouleur
+     *
+     * @but         : Fonction qui défini la couleur d'un pixel
+     *
+     * @param r     : quantite de rouge
+     * @param g     : quantite de vert
+     * @param b     : quantite de bleu
+     * @return      : void
+     * @throws      : NIL
+     */
     void setCouleur(unsigned char r, unsigned char g, unsigned char b);
 
-    // Fonction qui retourne la coordonée x
+    /**
+     * @name        : getX
+     *
+     * @but         : Fonction qui retourne la coordonnée x
+     *
+     * @return      : coordonnee x
+     * @throws      : NIL
+     */
     int getX() const;
 
-    // Fonction qui retourne la coordonée y
+    /**
+     * @name        : getX
+     *
+     * @but         : Fonction qui retourne la coordonnée y
+     *
+     * @return      : coordonnee y
+     * @throws      : NIL
+     */
     int getY() const;
 
-
-    // Fonction qui retourne la quantité de rouge
+    /**
+     * @name        : getR
+     *
+     * @but         : Fonction qui retourne la quantité de rouge
+     *
+     * @return      : quantité de rouge
+     * @throws      : NIL
+     */
     unsigned char getR() const;
 
-    // Fonction qui retourne la quantité de vert
+    /**
+     * @name        : getG
+     *
+     * @but         : Fonction qui retourne la quantité de vert
+     *
+     * @return      : quantité de vert
+     * @throws      : NIL
+     */
     unsigned char getG() const;
 
-    // Fonction qui retourne la quantité de bleu
+    /**
+     * @name        : getB
+     *
+     * @but         : Fonction qui retourne la quantité de bleu
+     *
+     * @return      : quantité de bleu
+     * @throws      : NIL
+     */
     unsigned char getB() const;
 
-    // Fonction qui afecte une nouvelle coordonnée x
-    void setX(int x);
-
-    // Fonction qui afecte une nouvelle coordonnée y
-    void setY(int y);
-
-    // Fonction qui afecte des nouvelles coordonnée x et y
+    /**
+     * @name        : setXY
+     *
+     * @but         : Fonction qui affecte des nouvelles coordonnées x et y
+     *
+     * @param x     : coordonnee x
+     * @param y     : coordonnee y
+     * @return      : void
+     * @throws      : NIL
+     */
     void setXY(int x, int y);
 
-    // Fonction qui déclare l'opérateur += pour des coordonnées
-    // Paramètres
-    // c        : la coordonée
-    void operator+=(const Coordonnee c);
+    /**
+     * @name        : operator+=
+     *
+     * @but         : Fonction qui déclare l'opérateur += pour des coordonnées
+     *
+     * @param c     : la coordonnee
+     * @return      : void
+     * @throws      : NIL
+     */
+    void operator+=(Coordonnee c);
 
-    // Fonction qui déclare l'opérateur = pour des coordonnées
-    // Paramètres
-    // c        : la coordonée
-    Coordonnee& operator=(const Coordonnee c);
+    /**
+     * @name        : operator=
+     *
+     * @but         : Fonction qui déclare l'opérateur = pour des coordonnées
+     *
+     * @param c     : la coordonnee
+     * @return      : La coordonnee mais affecte par la coordonnee c
+     * @throws      : NIL
+     */
+    Coordonnee& operator=(Coordonnee c);
 
-    // Fonction qui déclare l'opérateur != pour des coordonnées
-    // Paramètres
-    // c        : la coordonée
-    bool operator!=(const Coordonnee c) const;
+    /**
+     * @name        : operator!=
+     *
+     * @but         : Fonction qui déclare l'opérateur != pour des coordonnées
+     *
+     * @param c     : la coordonnee
+     * @return      : Vrai, si ils ne sont pas egal sinon Faux
+     * @throws      : NIL
+     */
+    bool operator!=(Coordonnee c) const;
 
-    // Fonction qui déclare l'opérateur == pour des coordonnées
-    // Paramètres
-    // c        : la coordonée
-    bool operator==(const Coordonnee c) const;
-
-    // Fonction qui contrôle s'il y a déjà autre chose à cette position
-    // Paramètres
-    //  coordonne   : la coordonée à controler
-    bool memePos(Coordonnee coordonne);
+    /**
+     * @name        : operator==
+     *
+     * @but         : Fonction qui déclare l'opérateur == pour des coordonnées
+     *
+     * @param c     : la coordonnee
+     * @return      : Vrai, si ils sont egaux sinon Faux
+     * @throws      : NIL
+     */
+    bool operator==(Coordonnee c) const;
 
 private:
     // Position

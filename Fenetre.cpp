@@ -3,7 +3,7 @@
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
-// But
+// But          Class qui gere l'affichage du terrain de jeu avec les serpents et pommes qui sont envoyé du GameMaster
 //
 // Remarque
 //
@@ -12,12 +12,11 @@
 // Compilateur  MinGW w64 9.0
 //------------------------------------------------------------------------------
 #include "Fenetre.h"
-
 #include <iostream> // Pour les cout
 
 using namespace std;
 
-Fenetre::Fenetre() {}
+Fenetre::Fenetre() = default;
 
 Fenetre::~Fenetre() {
     SDL_DestroyRenderer(renderer);
@@ -28,19 +27,19 @@ Fenetre::~Fenetre() {
 void Fenetre::update(const vector<Coordonnee>& objets) {
 
     // Contrôle si l'utilisateur ferme la fenêtre
-    pollEvent();
+    sondeEvenement();
 
     // Vide l'affichage précédent
-    clear();
+    videAffichage();
 
     // Ajoute les éléments du prochain affichage
-    addObjects(objets);
+    ajouteElements(objets);
 
     // Affiche les éléments
     SDL_RenderPresent(renderer);
 }
 
-void Fenetre::pollEvent(){
+void Fenetre::sondeEvenement(){
     // Quitte le programme si l'utilisateur ferme la fenêtre
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
@@ -52,25 +51,25 @@ void Fenetre::pollEvent(){
     }
 }
 
-void Fenetre::clear(){
+void Fenetre::videAffichage(){
     // Vide l'affichage précédent
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
 }
 
-void Fenetre::addObjects(const vector<Coordonnee> &objets) {
-    // Mets tous les éléments à afficher dans une variable d'affichage
+void Fenetre::ajouteElements(const vector<Coordonnee> &objets) {
+    // Met tous les éléments à afficher dans une variable d'affichage
     for (Coordonnee objet : objets) {
         SDL_SetRenderDrawColor(renderer, objet.getR() , objet.getG(), objet.getB(), SDL_ALPHA_OPAQUE);
         SDL_RenderDrawPoint(renderer, objet.getX(), objet.getY());
     }
 }
 
-void Fenetre::initFenetre(int largeurFenetre, int longeurFenetre, float scale) {
+void Fenetre::initFenetre(int _largeurFenetre, int _longeurFenetre, float _scale) {
     // Initialise la taille de la fenêtre
-    this->largeurFenetre = largeurFenetre;
-    this->longeurFenetre = longeurFenetre;
-    this->scale = scale;
+    this->largeurFenetre = _largeurFenetre;
+    this->longeurFenetre = _longeurFenetre;
+    this->scale = _scale;
 
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -80,7 +79,7 @@ void Fenetre::initFenetre(int largeurFenetre, int longeurFenetre, float scale) {
                                 SDL_WINDOW_SHOWN,
                                 &window, &renderer);
 
-    // Ferme la fenêtre en cas de problême d'initialisation de SDL
+    // Ferme la fenêtre en cas de problème d'initialisation de SDL
     if (window == nullptr or renderer == nullptr) {
         cout << "SDL not ready ... quitting" << endl;
         exit(EXIT_FAILURE);

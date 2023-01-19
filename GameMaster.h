@@ -3,7 +3,7 @@
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
-// But
+// But          Class qui gere le deroulement du jeu : les actions des serpents et l'affichage du terrain de jeu.
 //
 // Remarque
 //
@@ -46,7 +46,7 @@ public:
     /**
      * @name                : update
      *
-     * @but                 : Fonction qui mets à jour les serpents et l'affichage
+     * @but                 : Fonction qui met à jour les serpents et l'affichage
      *
      * @return              : void
      * @throws              : NIL
@@ -58,7 +58,7 @@ public:
      *
      * @but                 : Fonction qui retourne si le jeu tourne encore
      *
-     * @return              : Vrai, si le jeu troune, sinon non
+     * @return              : Vrai, si le jeu tourne, sinon faux
      * @throws              : NIL
      */
     bool appIsRunning() const;
@@ -91,10 +91,10 @@ private:
     /**
      * @name                : estOccupe
      *
-     * @but                 : Verifie si la coordonnee est occupee ou non par un serpent.
+     * @but                 : Verifie si la coordonnee est occupee ou non par un serpent
      *
-     * @param coordonnee    : Coordonnee teste
-     * @return              : Vrai, si la coordonne est occupe, sinon faux
+     * @param coordonnee    : Coordonnee test
+     * @return              : Vrai, si la coordonnee est occupee, sinon faux
      * @throws              : NIL
      */
     bool estOccupe(Coordonnee coordonnee);
@@ -102,7 +102,7 @@ private:
     /**
      * @name 	            : serpentEstMort
      *
-     * @but 	            : Retour les Coordonnee du robot
+     * @but 	            : Retire le serpent qui vient de mourir
      * @param serpentMort   :
      * @return              : void
      * @throws              : NIL
@@ -112,13 +112,13 @@ private:
     /**
      * @name 	            : checkCollision
      *
-     * @but 	            : Test si deux serpents sont entre en collision
+     * @but 	            : Test si deux serpents sont entres en collision
      * @param serpent1	    : premier serpent
      * @param serpent2	    : deuxieme serpent
-     * @return              : Oui, s'il y a eu une collision, sinon non
+     * @return              : Vrai, s'il y a eu une collision, sinon faux
      * @throws              : NIL
      */
-    bool checkCollision(Snake &serpent1, Snake &serpent2);
+    static bool checkCollision(Snake &serpent1, Snake &serpent2);
 
     /**
      * @name 	            : gestionCollision

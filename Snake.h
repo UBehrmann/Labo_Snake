@@ -3,7 +3,8 @@
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
-// But
+// But          Class qui contient les donnees pour representer un serpent dans le terrain de jeu et des fonctions
+//              pour les differents evenements qui peuvent lui etre apliques
 //
 // Remarque
 //
@@ -20,8 +21,7 @@
 
 #include <vector>   // Pour les vecteurs de coordonées
 
-
-// Les déplacements relatifs autorisé du serpent
+// Les déplacements relatifs autorisés du serpent
 const std::vector<Coordonnee> DEPLACEMENTS_AUTORISE = {
         {0, -1}, // Haut
         {1, 0},  // Droite
@@ -35,92 +35,186 @@ using Corps = std::vector<Coordonnee>;
 class Snake {
 public:
 
+    // Variables static
     static int largeurFenetre;
     static int longeurFenetre;
-    const int tailleSerpent = 10;
 
-    // Constructeur par défaut pour initialiser le vecteur contenant les serpents
+    /**
+     * @name 	            : Snake
+     *
+     * @but 	            : Constructeur par défaut pour initialiser le vecteur contenant les serpents
+     * @return              : void
+     * @throws              : NIL
+     */
     Snake();
 
-    // Constructeur
+    /**
+     * @name 	            : Snake
+     *
+     * @but 	            : Constructeur par défaut pour initialiser le vecteur contenant les serpents
+     * @param position	    : Position initial du serpent
+     * @param id	        : ID du serpent
+     * @return              : void
+     * @throws              : NIL
+     */
     Snake(Coordonnee position, int id);
 
-    // Destructeur
+    /**
+     * @name 	            : ~Snake
+     *
+     * @but 	            : Destructeur de Snake
+     * @return              : void
+     * @throws              : NIL
+     */
     ~Snake();
 
-    // Fonction qui initialise la fenêtre pour les serpents
-    // Paramètres
-    //  largeurFenetre      : Largeur de la fenêtre
-    //  longeurFenetre      : Longeur de la fenêtre
+    /**
+     * @name 	                : initTailleFenetre
+     *
+     * @but 	                : Fonction qui initialise la fenêtre pour les serpents
+     * @param largeurFenetre    : Largeur de la fenêtre
+     * @param longeurFenetre    : Longeur de la fenêtre
+     * @return                  : void
+     * @throws                  : NIL
+     */
     static void initTailleFenetre(int largeurFenetre, int longeurFenetre);
 
-    // Fonction qui défini l'opérateur == entre deux serpents
-    // Paramètres
-    //  s                   : serpent
+    /**
+     * @name 	    : operator==
+     *
+     * @but 	    : Fonction qui défini l'opérateur == entre deux serpents
+     * @param s     : serpent
+     * @return      : Vrai, si les deux serpents ont le même ID sinon faux
+     * @throws      : NIL
+     */
     bool operator==(const Snake& s) const;
 
-    // Fonction qui défini l'opérateur != entre deux serpents
-    // Paramètres
-    //  s                   : serpent
+    /**
+     * @name 	    : operator!=
+     *
+     * @but 	    : Fonction qui défini l'opérateur != entre deux serpents
+     * @param s     : serpent
+     * @return      : Vrai, si les deux serpents n'ont pas le même ID sinon faux
+     * @throws      : NIL
+     */
     bool operator!=(const Snake& s) const;
 
-    // Fonction qui défini l'opérateur = entre deux serpents
-    // Paramètres
-    //  s                   : serpent
+    /**
+     * @name 	    : operator=
+     *
+     * @but 	    : Fonction qui défini l'opérateur = entre deux serpents
+     * @param s     : serpent
+     * @return      : Le nouveau serpent qui a ete affecte par le serpent "s"
+     * @throws      : NIL
+     */
     Snake& operator=(const Snake& s);
 
-    // Fonction qui crée une nouvelle pomme pour un serpent
-    void creationPomme();
-
-    // Fonction qui déplace le serpent
+    /**
+     * @name 	    : bouge
+     *
+     * @but 	    : Fonction qui déplace le serpent
+     * @return      : void
+     * @throws      : NIL
+     */
     void bouge();
 
-    // Fonction qui retourne la position de la tête
+    /**
+     * @name 	    : getTete
+     *
+     * @but 	    : Fonction qui retourne la position de la tête
+     * @return      : Un object de type Coordonnee qui est la position de la tete
+     * @throws      : NIL
+     */
     Coordonnee getTete() const;
 
-    // Fonction qui retourne le vecteur du corps
+    /**
+     * @name 	    : getCorps
+     *
+     * @but 	    : Fonction qui retourne le vecteur du corps
+     * @return      : Un objet de type vector<Coordonnee> qui represente le corps du serpent
+     * @throws      : NIL
+     */
     const Corps &getCorps() const;
 
-    // Fonction qui retourne la position de la pomme
+    /**
+     * @name 	    : getPomme
+     *
+     * @but 	    : Fonction qui retourne la position de la pomme
+     * @return      : Un object de type Coordonnee qui represente la pomme de ce serpent
+     * @throws      : NIL
+     */
     Coordonnee &getPomme();
 
-    // Fonction qui retourne l'identificateur du serpent
-    int getId() const;
-
-    // Fonction qui affecte une position à la tête
-    void setTete();
-
-    // Fonction qui retire des parties de corps à un serpent mordu
-    // Paramètres
-    //  impacte     : coordonée de la morçure
+    /**
+     * @name 	        : serpentEstMange
+     *
+     * @but 	        : Fonction qui retire des parties de corps à un serpent mordu
+     * @param impacte   : coordonée de la morçure
+     * @return          : void
+     * @throws          : NIL
+     */
     void serpentEstMange(Coordonnee impacte);
 
-    // Fonction qui ajoute des parties de corps à un serpent qui a mordu
-    // Paramètres
-    //  taille      : quantité de parties à ajouter
+    /**
+     * @name 	        : serpentMange
+     *
+     * @but 	        : Fonction qui ajoute des parties de corps à un serpent qui a mordu
+     * @param taille    : quantité de parties à ajouter
+     * @return          : void
+     * @throws          : NIL
+     */
     void serpentMange(int taille);
 
-    // Fonction qui détruit un serpent mort
+    /**
+     * @name 	    : serpentEstMort
+     *
+     * @but 	    : Fonction qui détruit un serpent mort
+     * @param tueur : Serpent qui a tué ce serpent
+     * @return      : void
+     * @throws      : NIL
+     */
     void serpentEstMort(Snake& tueur);
 
 private:
+    // Variables de Snake
     Corps corps;
     Coordonnee tete;
     Coordonnee posPomme;
     int ID;
     int valPomme;
+    const int tailleSerpent = 10;
 
-    // Fonction qui fait grandir le serpent et replace une nouvelle pomme
-    // Paramètres
-    // iterateur    : position où ajouter les parties
+    // Fonctions prive
+
+    /**
+     * @name 	        : mangePomme
+     *
+     * @but 	        : Fonction qui fait grandir le serpent et replace une nouvelle pomme
+     * @param iterateur : position où ajouter les parties
+     * @return          : void
+     * @throws          : NIL
+     */
     void mangePomme(Corps::iterator iterateur);
 
-    // Fonction qui augmente la taille du serpent
-    // Paramètres
-    //  iterateur   : position où ajouter les parties
-    //  taille      : quantité de parties à ajouter
+    /**
+     * @name 	        : ajouteCorps
+     *
+     * @but 	        : Fonction qui augmente la taille du serpent
+     * @param iterateur : position où ajouter les parties
+     * @param taille    : quantité de parties à ajouter
+     * @return          : void
+     * @throws          : NIL
+     */
     void ajouteCorps(Corps::iterator iterateur, int taille);
 
+    /**
+     * @name 	    : creationPomme
+     *
+     * @but 	    : Fonction qui crée une nouvelle pomme pour un serpent
+     * @return      : void
+     * @throws      : NIL
+     */
+    void creationPomme();
 };
 
 #endif //LABO_SNAKE_SNAKE_H

@@ -3,7 +3,7 @@
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
-// But
+// But          Class qui gere le deroulement du jeu : les actions des serpents et l'affichage du terrain de jeu.
 //
 // Remarque
 //
@@ -29,9 +29,6 @@ void GameMaster::init() {
     const string messageErreur = "Mauvaise saisie, veuillez recommencer.";
 
     // Saisies utilisateur
-//    int longeurFenetre = 80; // saisie("Longeur fenetre", messageErreur, 80, 200);
-//    int largeurFenetre = 100; // saisie("Largeur fenetre", messageErreur, 80, 200);
-//    size_t nbreSerpents = 20; // (size_t)saisie("Nbre de serpents", messageErreur, 5, 20);
     int longeurFenetre = saisie("Longeur fenetre", messageErreur, 80, 200);
     int largeurFenetre = saisie("Largeur fenetre", messageErreur, 80, 200);
     size_t nbreSerpents = (size_t)saisie("Nbre de serpents", messageErreur, 5, 20);
@@ -94,12 +91,11 @@ void GameMaster::updateSerpents() {
     for (Snake& i : serpents)
         i.bouge();
 
-    // test pour collisions entre les serpents
+    // Test pour collisions entre les serpents
     for (Snake& i : serpents) {
         for (Snake& j : serpents) {
             // Si ce n'est pas lui-même et qu'il y a une collision
             if (j != i && checkCollision(i, j)) {
-
                 gestionCollision(i, j);
             }
         }
@@ -111,7 +107,7 @@ void GameMaster::serpentEstMort(Snake& serpentMort, Snake& serpentTueur) {
     // Affichage de texte de mort
     serpentMort.serpentEstMort(serpentTueur);
 
-    // Supprime le serpentMort du vecteur serpents
+    // Supprime le serpentMort du vecteur de serpents
     serpents.erase(find(serpents.begin(), serpents.end(), serpentMort));
 }
 
@@ -122,16 +118,16 @@ bool GameMaster::checkCollision(Snake& serpent1, Snake& serpent2){
 
 void GameMaster::gestionCollision(Snake& serpent1, Snake& serpent2){
 
-    // test si c'est une collision entre deux tete ou pas
+    // Test si c'est une collision entre deux tetes ou pas
     if (serpent1.getTete() == serpent2.getTete()){
 
-        // trouve le serpent le plus grand et tue l'autre
+        // Trouve le serpent le plus grand et tue l'autre
         if (serpent1.getCorps().size() > serpent2.getCorps().size()) {
-            serpent1.serpentMange(serpent2.getCorps().size() * 10 / 6);
+            serpent1.serpentMange(int(serpent2.getCorps().size()) * 10 / 6);
             serpentEstMort(serpent2, serpent1);
         }
         else {
-            serpent2.serpentMange(serpent1.getCorps().size() * 10 / 6);
+            serpent2.serpentMange(int(serpent1.getCorps().size()) * 10 / 6);
             serpentEstMort(serpent1, serpent2);
         }
     }

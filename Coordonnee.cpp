@@ -3,7 +3,7 @@
 // Auteur       Urs Behrmann et Calum Quinn
 // Date         09.01.2023
 //
-// But
+// But          Class qui sert a stocker et transmettre des donnees de position et de couleur
 //
 // Remarque
 //
@@ -13,14 +13,6 @@
 //------------------------------------------------------------------------------
 
 #include "Coordonnee.h"
-
-int Coordonnee::getX() const {
-    return x;
-}
-
-int Coordonnee::getY() const {
-    return y;
-}
 
 Coordonnee::Coordonnee(int x, int y, unsigned char r, unsigned char g, unsigned char b) : x(x), y(y), r(r), g
 (g), b(b) {}
@@ -44,14 +36,18 @@ bool Coordonnee::operator==(const Coordonnee c) const{
     return x == c.x && y == c.y;
 }
 
-void Coordonnee::setCouleur(unsigned char r, unsigned char g, unsigned char b) {
-    this->r = r;
-    this->g = g;
-    this->b = b;
+void Coordonnee::setCouleur(unsigned char _r, unsigned char _g, unsigned char _b) {
+    this->r = _r;
+    this->g = _g;
+    this->b = _b;
 }
 
-bool Coordonnee::memePos(Coordonnee coordonnee) {
-    return *this == coordonnee;
+int Coordonnee::getX() const {
+    return x;
+}
+
+int Coordonnee::getY() const {
+    return y;
 }
 
 unsigned char Coordonnee::getR() const {
@@ -66,15 +62,7 @@ unsigned char Coordonnee::getB() const {
     return b;
 }
 
-void Coordonnee::setX(int x) {
-    this->x = x;
-}
-
-void Coordonnee::setY(int y) {
-    this->y = y;
-}
-
-void Coordonnee::setXY(int x, int y) {
-    this->x = x;
-    this->y = y;
+void Coordonnee::setXY(int _x, int _y) {
+    this->x = _x;
+    this->y = _y;
 }
