@@ -173,7 +173,7 @@ public:
      * @return      : void
      * @throws      : NIL
      */
-    void serpentEstMort(Snake& tueur);
+    void serpentEstMort(Snake& tueur) const;
 
 private:
     // Variables de Snake

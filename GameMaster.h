@@ -118,7 +118,7 @@ private:
      * @return              : Vrai, s'il y a eu une collision, sinon faux
      * @throws              : NIL
      */
-    static bool checkCollision(Snake &serpent1, Snake &serpent2);
+    static bool checkCollision(const Snake &serpent1, const Snake &serpent2);
 
     /**
      * @name 	            : gestionCollision

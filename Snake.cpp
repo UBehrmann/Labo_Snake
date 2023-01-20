@@ -127,16 +127,20 @@ void Snake::ajouteCorps(Corps::iterator iterateur, int taille) {
 void Snake::serpentEstMange(Coordonnee impacte) {
     // Déclare des itérateurs pour la position de la tête et de la morçure
     Corps::iterator iterateurImpacte = std::find(corps.begin(), corps.end(), impacte);
-    Corps::iterator iterateurTete = std::find(corps.begin(), corps.end(), tete);
+    Corps::iterator iterateurTete    = std::find(corps.begin(), corps.end(), tete);
 
+    size_t indiceImpacte = size_t(distance(corps.begin(), iterateurImpacte));
+    size_t indiceTete    = size_t(distance(corps.begin(), iterateurTete));
     // Efface le corps nécessaire en fonction de l'impacte
-    if (iterateurTete < iterateurImpacte) {
+//   if (iterateurTete < iterateurImpacte) {
+    if (indiceTete < indiceImpacte) {
         corps.erase(iterateurTete + 1, iterateurImpacte);
     }
     else {
         corps.erase(corps.begin(), iterateurImpacte);
         corps.erase(iterateurTete, corps.end());
     }
+
 }
 
 void Snake::serpentMange(int taille) {
@@ -144,10 +148,9 @@ void Snake::serpentMange(int taille) {
     ajouteCorps(std::find(corps.begin(),corps.end(),tete),taille);
 }
 
-void Snake::serpentEstMort(Snake& tueur) {
+void Snake::serpentEstMort(Snake& tueur) const {
     // Met à jour les statistiques de mort et détruit le serpent mort
     std::cout << tueur.ID << " a tue " << ID << std::endl;
-    this->~Snake();
 }
 
 bool Snake::operator==(const Snake& s) const {

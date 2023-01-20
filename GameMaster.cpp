@@ -111,7 +111,7 @@ void GameMaster::serpentEstMort(Snake& serpentMort, Snake& serpentTueur) {
     serpents.erase(find(serpents.begin(), serpents.end(), serpentMort));
 }
 
-bool GameMaster::checkCollision(Snake& serpent1, Snake& serpent2){
+bool GameMaster::checkCollision(const Snake& serpent1, const Snake& serpent2){
     // Check si la tete du serpent1 est sur une position du corps du serpent2
     return serpent2.getCorps().end() != find(serpent2.getCorps().begin(), serpent2.getCorps().end(), serpent1.getTete());
 }
@@ -135,6 +135,7 @@ void GameMaster::gestionCollision(Snake& serpent1, Snake& serpent2){
         // Trouve la position de l'impacte du serpent attaque
         for (size_t k = 0; k < serpent2.getCorps().size(); ++k) {
             if(serpent1.getTete() == serpent2.getCorps()[k]){
+                serpent1.serpentMange(serpent2.getCorps().size() - k);
                 serpent2.serpentEstMange(serpent2.getCorps()[k]);
                 break;
             }
